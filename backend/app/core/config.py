@@ -20,12 +20,14 @@ class Settings(BaseSettings):
     API_V1_PREFIX: str = "/api/v1"
     DEBUG: bool = True
     
-    # CORS Configuration
+    # CORS Configuration - Allow requests from these origins
+    # In production, set ALLOWED_ORIGINS environment variable with comma-separated URLs
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:5173",  # Vite default
         "http://localhost:3000",  # React default
         "http://127.0.0.1:5173",
         "http://127.0.0.1:3000",
+        "*",  # Allow all origins (for demo/portfolio - restrict in production if needed)
     ]
     
     # Database Configuration
