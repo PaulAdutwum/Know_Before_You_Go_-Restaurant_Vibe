@@ -4,12 +4,47 @@ venv/
 env/
 ENV/
 
-# Environment
+# Environment & Secrets - COMPREHENSIVE PROTECTION
 .env
+.env.*
 .env.local
 .env.production
-backend/.env
+.env.development
+.env.test
+.env.staging
 *.env
+backend/.env
+frontend/.env
+**/.env
+**/.env.local
+**/.env.production
+
+# API Keys & Secrets (specific secret file patterns only)
+*.secret
+*.secret.*
+*_secret.*
+*_secrets.*
+*.apikey
+*.apikey.*
+*_api_key.*
+*_apikey.*
+*.credentials
+*.credentials.*
+*_credentials.*
+*.pem
+*.p12
+*.pfx
+*.key  # Only ignore .key files, not files containing "key" in name
+
+# Configuration files that might contain secrets
+config.local.*
+config.production.*
+secrets.yaml
+secrets.yml
+secrets.json
+credentials.json
+credentials.yaml
+credentials.yml
 
 # Build
 dist/

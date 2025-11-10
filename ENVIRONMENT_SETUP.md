@@ -6,11 +6,11 @@ Complete guide to setting up environment variables for local development and pro
 
 ## 📋 **Quick Reference**
 
-| File | Purpose | When to Use |
-|------|---------|-------------|
-| `env.example` | Template for local development | Copy to `backend/.env` |
-| `env.railway.example` | Production backend config | Add in Railway Dashboard |
-| `env.vercel.example` | Production frontend config | Add in Vercel Dashboard |
+| File                  | Purpose                        | When to Use              |
+| --------------------- | ------------------------------ | ------------------------ |
+| `env.example`         | Template for local development | Copy to `backend/.env`   |
+| `env.railway.example` | Production backend config      | Add in Railway Dashboard |
+| `env.vercel.example`  | Production frontend config     | Add in Vercel Dashboard  |
 
 ---
 
@@ -181,6 +181,7 @@ Environments: ✅ Production  ✅ Preview  ✅ Development
 ### **Step 3: Redeploy**
 
 After adding environment variable:
+
 - Vercel → Deployments → Redeploy latest
 
 ---
@@ -192,6 +193,7 @@ If deploying Celery as separate service:
 ### **Option A: Share Environment with Backend (Recommended)**
 
 In Railway:
+
 1. Create new service from same repo
 2. Settings → Service Variables → **Link** to backend service
 3. All variables automatically shared!
@@ -252,12 +254,14 @@ open https://your-app.vercel.app
 ### **Issue: "GOOGLE_PLACES_API_KEY not set"**
 
 **Local:**
+
 ```bash
 # Check backend/.env file exists and has the key
 cat backend/.env | grep GOOGLE_PLACES_API_KEY
 ```
 
 **Railway:**
+
 - Go to Variables tab
 - Verify `GOOGLE_PLACES_API_KEY` is set
 - Restart service
@@ -267,6 +271,7 @@ cat backend/.env | grep GOOGLE_PLACES_API_KEY
 ### **Issue: "Database connection failed"**
 
 **Local:**
+
 ```bash
 # Check PostgreSQL is running
 redis-cli ping  # Should return PONG
@@ -274,6 +279,7 @@ psql vibefinder -c "SELECT 1"  # Should return 1
 ```
 
 **Railway:**
+
 - Verify PostgreSQL is added to project
 - Check `DATABASE_URL=${{Postgres.DATABASE_URL}}` in variables
 - View logs for specific error
@@ -283,11 +289,13 @@ psql vibefinder -c "SELECT 1"  # Should return 1
 ### **Issue: Frontend shows "Failed to fetch"**
 
 **Check:**
+
 1. `VITE_API_URL` is set correctly in Vercel
 2. CORS is configured in `backend/app/core/config.py`
 3. Backend is deployed and running on Railway
 
 **Test:**
+
 ```bash
 # From your computer
 curl https://your-backend.railway.app/health
@@ -303,6 +311,7 @@ Update `config.py` with your Vercel URL and redeploy backend.
 ### **Issue: "Redis connection refused"**
 
 **Local:**
+
 ```bash
 # Start Redis
 brew services start redis
@@ -312,6 +321,7 @@ redis-cli ping
 ```
 
 **Railway:**
+
 - Verify Redis is added to project
 - Check `REDIS_URL=${{Redis.REDIS_URL}}` in variables
 
@@ -320,6 +330,7 @@ redis-cli ping
 ## 📊 **Environment Variable Checklist**
 
 ### **Before First Local Run:**
+
 - [ ] Created `backend/.env` from `env.example`
 - [ ] Added Google Places API key
 - [ ] Set `DATABASE_URL` (PostgreSQL or SQLite)
@@ -327,6 +338,7 @@ redis-cli ping
 - [ ] PostgreSQL and Redis are running locally
 
 ### **Before Railway Deployment:**
+
 - [ ] Pushed code to GitHub
 - [ ] Added PostgreSQL to Railway project
 - [ ] Added Redis to Railway project
@@ -336,6 +348,7 @@ redis-cli ping
 - [ ] Set `PYTHONPATH=/app/backend`
 
 ### **Before Vercel Deployment:**
+
 - [ ] Backend is deployed to Railway
 - [ ] Copied Railway backend URL
 - [ ] Set `VITE_API_URL` in Vercel
@@ -343,6 +356,7 @@ redis-cli ping
 - [ ] Redeployed backend after CORS update
 
 ### **After Deployment:**
+
 - [ ] Tested backend: `curl https://backend.railway.app/health`
 - [ ] Tested API: Search query works
 - [ ] Tested frontend: Opens and loads
@@ -392,12 +406,14 @@ VITE_API_URL=https://your-backend-name.railway.app
 ## 🔒 **Security Best Practices**
 
 ### **Never Commit:**
+
 - ❌ `backend/.env` (actual secrets)
 - ❌ API keys
 - ❌ Database passwords
 - ❌ Redis URLs with credentials
 
 ### **Safe to Commit:**
+
 - ✅ `env.example` (templates)
 - ✅ `env.railway.example` (templates)
 - ✅ `env.vercel.example` (templates)
@@ -426,6 +442,7 @@ backend/.env
 ## ✅ **You're All Set!**
 
 With these environment files and instructions, you can:
+
 - ✅ Run locally with proper configuration
 - ✅ Deploy to Railway with all services connected
 - ✅ Deploy frontend to Vercel
@@ -433,4 +450,3 @@ With these environment files and instructions, you can:
 - ✅ Ready for production use!
 
 **Next:** Follow `DEPLOY_QUICK_START.md` for deployment! 🚀
-

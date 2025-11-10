@@ -1,0 +1,60 @@
+#!/bin/bash
+# Pre-commit hook to detect potential API keys and secrets
+# This will warn you before committing files that might contain secrets
+
+# Colors for output
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+echo "🔒 Checking for potential secrets..."
+
+# Patterns to detect API keys
+PATTERNS=(
+    "AIza[0-9A-Za-z_-]{35}"  # Google API keys
+    "sk-[0-9A-Za-z]{32,}"     # OpenAI keys
+    "AKIA[0-9A-Z]{16}"        # AWS keys
+    "ghp_[0-9A-Za-z]{36}"     # GitHub tokens
+    "xox[baprs]-[0-9a-zA-Z-]{10,48}"  # Slack tokens
+)
+
+# Files to check (staged files)
+FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+FOUND_SECRETS=0
+
+for file in $FILES; do
+    # Skip binary files
+    if git diff --cached -- "$file" | grep -q "^Binary"; then
+        continue
+    fi
+    
+    # Check each pattern
+    for pattern in "${PATTERNS[@]}"; do
+        if git diff --cached -- "$file" | grep -qE "$pattern"; then
+            echo -e "${RED}⚠️  WARNING: Potential API key detected in $file${NC}"
+            echo -e "${YELLOW}   Pattern: $pattern${NC}"
+            FOUND_SECRETS=1
+        fi
+    done
+    
+    # Check for .env files
+    if [[ "$file" == *.env* ]] || [[ "$file" == */.env* ]]; then
+        echo -e "${RED}⚠️  WARNING: .env file detected: $file${NC}"
+        echo -e "${YELLOW}   .env files should not be committed!${NC}"
+        FOUND_SECRETS=1
+    fi
+done
+
+if [ $FOUND_SECRETS -eq 1 ]; then
+    echo ""
+    echo -e "${RED}❌ COMMIT BLOCKED: Potential secrets detected!${NC}"
+    echo -e "${YELLOW}Please review your changes and remove any API keys or secrets.${NC}"
+    echo -e "${YELLOW}Use placeholders like 'your_api_key_here' in documentation.${NC}"
+    exit 1
+else
+    echo -e "${GREEN}✅ No secrets detected. Safe to commit.${NC}"
+    exit 0
+fi
+

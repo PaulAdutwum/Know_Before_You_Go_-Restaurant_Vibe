@@ -1,0 +1,11 @@
+# 🔒 SECURITY REMINDER
+# 
+# Before committing, verify:
+# - [ ] No API keys in .md files (use placeholders only)
+# - [ ] No .env files committed
+# - [ ] No actual secrets in code or documentation
+# - [ ] All API keys are placeholders: your_*_api_key_here
+#
+# If you see this message, you're about to commit.
+# Review your changes carefully!
+

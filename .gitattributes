@@ -1,0 +1,15 @@
+# Git Attributes - Prevent accidental commits of secrets
+# This file helps git handle certain files correctly
+
+# Mark .env files as binary to prevent accidental commits
+*.env binary
+.env binary
+**/.env binary
+
+# Mark secret files as binary
+*.secret binary
+*.pem binary
+*.key binary
+*.p12 binary
+*.pfx binary
+
