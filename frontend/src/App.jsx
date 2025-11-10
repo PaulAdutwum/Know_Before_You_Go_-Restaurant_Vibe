@@ -94,54 +94,50 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950">
-      {/* Header - STYLISH & CREATIVE */}
-      <header className="bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-600 shadow-2xl relative overflow-hidden border-b-4 border-cyan-400/40">
-        {/* Beautiful animated background patterns */}
-        <div className="absolute inset-0 opacity-15">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-300 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-300 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '0.7s'}}></div>
+      {/* Header - DARK RESTAURANT VIBE */}
+      <header className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 shadow-2xl relative overflow-hidden border-b-2 border-slate-700/50">
+        {/* Dark restaurant ambiance - subtle warm glows */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-900/30 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-900/20 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '1s'}}></div>
+          <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-blue-900/20 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
         </div>
         
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '50px 50px'
+        {/* Subtle texture overlay */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
+          backgroundSize: '40px 40px'
         }}></div>
         
-        <div className="max-w-7xl mx-auto px-6 py-12 sm:px-8 lg:px-12 relative z-10">
-          {/* Logo in top left corner - MORE STYLISH */}
-          <div className="absolute top-6 left-6 sm:left-10 flex items-center space-x-3 animate-fade-in">
-            <div className="bg-white/25 backdrop-blur-md p-3 rounded-2xl border-2 border-white/40 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-              <span className="text-2xl font-black text-white tracking-tight">KB</span>
+        <div className="max-w-7xl mx-auto px-6 py-10 sm:px-8 lg:px-12 relative z-10">
+          {/* Logo in top left - DARKER STYLE */}
+          <div className="absolute top-5 left-5 sm:left-8 flex items-center space-x-2.5 animate-fade-in">
+            <div className="bg-gradient-to-br from-blue-600/80 to-cyan-600/80 backdrop-blur-md p-2.5 rounded-xl border border-blue-500/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <span className="text-xl font-black text-white tracking-tighter">KB</span>
             </div>
             <div className="hidden sm:block">
-              <p className="text-white font-black text-sm tracking-wide">Know Before</p>
-              <p className="text-white/95 font-bold text-xs -mt-0.5 tracking-wide">You Go</p>
+              <p className="text-white font-black text-xs tracking-tight">Know Before</p>
+              <p className="text-slate-300 font-bold text-[10px] -mt-0.5 tracking-tight">You Go</p>
             </div>
           </div>
 
-          {/* Main Content - MORE SPACED & STYLISH */}
-          <div className="text-center animate-fade-in pt-20 sm:pt-16 pb-8">
-            {/* Animated Title */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-white mb-6 tracking-tight drop-shadow-2xl leading-tight">
-              <span className="inline-block animate-slide-up" style={{animationDelay: '0.1s'}}>
-                Find the Vibe
+          {/* Main Content - STRATEGIC & CATCHY */}
+          <div className="text-center animate-fade-in pt-16 sm:pt-14 pb-6">
+            {/* Animated Title - SMALLER & MORE STRATEGIC */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-5 tracking-tight drop-shadow-2xl leading-tight">
+              <span className="inline-block animate-slide-up opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.2s forwards'}}>
+                Know Before You Go
               </span>
               <br />
-              <span className="inline-block text-white/95 animate-slide-up" style={{animationDelay: '0.3s'}}>
-                of Your Restaurant
-              </span>
-              <br />
-              <span className="inline-block text-cyan-100 animate-slide-up" style={{animationDelay: '0.5s'}}>
-                Before You Go
+              <span className="inline-block text-cyan-400 animate-slide-up opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.4s forwards'}}>
+                Every Restaurant's True Vibe
               </span>
             </h1>
             
-            {/* Subtitle with better spacing */}
-            <p className="text-white/95 text-xl sm:text-2xl font-bold max-w-4xl mx-auto leading-relaxed mt-8 animate-fade-in" style={{animationDelay: '0.7s'}}>
-              Understand the true atmosphere, discover must-try dishes, and plan the perfect meal
-              <span className="block mt-2 text-cyan-100">—all before making a reservation</span>
+            {/* Strategic Subtitle */}
+            <p className="text-slate-300 text-lg sm:text-xl font-semibold max-w-3xl mx-auto leading-relaxed mt-6 animate-fade-in opacity-0" style={{animation: 'fadeIn 1s ease-out 0.6s forwards'}}>
+              Real sentiment from thousands of reviews. Must-try dishes. Common complaints.
+              <span className="block mt-2 text-cyan-400 font-bold">All before you make a reservation.</span>
             </p>
           </div>
         </div>
@@ -184,34 +180,34 @@ function App() {
         )}
 
         {!hasSearched && !isLoading && (
-          <div className="mt-16 text-center animate-slide-up">
+          <div className="mt-12 text-center">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                Plan the Perfect Dining Experience
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-3 opacity-0 animate-fade-in" style={{animation: 'fadeIn 0.8s ease-out 0.2s forwards'}}>
+                How It Works
               </h2>
-              <p className="text-slate-300 text-xl font-bold mb-16 max-w-3xl mx-auto">
-                Our AI analyzes thousands of reviews to reveal what you <span className="text-cyan-400 font-black">really</span> need to know
+              <p className="text-slate-300 text-lg font-semibold mb-12 max-w-2xl mx-auto opacity-0 animate-fade-in" style={{animation: 'fadeIn 0.8s ease-out 0.4s forwards'}}>
+                AI-powered insights from thousands of real reviews
               </p>
-              <div className="grid md:grid-cols-3 gap-10 mt-8">
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-blue-500/50">
-                  <div className="text-6xl mb-6 font-black text-cyan-400">01</div>
-                  <h3 className="text-white font-black text-2xl mb-4">Search Any Restaurant</h3>
-                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
-                    Enter a location, cuisine type, or specific restaurant name. We'll find it instantly.
+              <div className="grid md:grid-cols-3 gap-6 mt-8">
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.6s forwards'}}>
+                  <div className="text-5xl mb-5 font-black text-cyan-400">01</div>
+                  <h3 className="text-white font-black text-xl mb-3">Search</h3>
+                  <p className="text-slate-300 text-base leading-relaxed font-medium">
+                    Location, cuisine, or restaurant name. Instant results.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-900/40 to-cyan-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-cyan-500/50">
-                  <div className="text-6xl mb-6 font-black text-blue-400">02</div>
-                  <h3 className="text-white font-black text-2xl mb-4">AI Reads 1000s of Reviews</h3>
-                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
-                    Advanced ML analyzes sentiment, detects vibes, and finds patterns humans miss.
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.8s forwards'}}>
+                  <div className="text-5xl mb-5 font-black text-blue-400">02</div>
+                  <h3 className="text-white font-black text-xl mb-3">AI Analysis</h3>
+                  <p className="text-slate-300 text-base leading-relaxed font-medium">
+                    ML analyzes sentiment, vibes, and patterns from thousands of reviews.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-blue-500/50">
-                  <div className="text-6xl mb-6 font-black text-cyan-400">03</div>
-                  <h3 className="text-white font-black text-2xl mb-4">Make Smart Decisions</h3>
-                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
-                    Get honest insights: true sentiment, must-try dishes, and what to watch out for.
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 1s forwards'}}>
+                  <div className="text-5xl mb-5 font-black text-cyan-400">03</div>
+                  <h3 className="text-white font-black text-xl mb-3">Decide</h3>
+                  <p className="text-slate-300 text-base leading-relaxed font-medium">
+                    Get honest insights: sentiment, dishes, and what to watch for.
                   </p>
                 </div>
               </div>

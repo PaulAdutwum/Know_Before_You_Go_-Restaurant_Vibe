@@ -53,45 +53,57 @@ function SearchBar({ onSearch, isLoading }) {
               </div>
             </div>
             
-            {/* Buttons - PROFESSIONAL STYLE */}
+            {/* Buttons - CREATIVE & ANIMATED */}
             <div className="flex gap-3">
-              {/* Near Me Button - BLUISH */}
+              {/* Near Me Button - CREATIVE STYLE */}
               <button
                 type="button"
                 onClick={handleUseMyLocation}
                 disabled={isLoading || isGettingLocation}
-                className="px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95 text-base whitespace-nowrap shadow-lg border-2 border-blue-500/30"
+                className="group relative px-5 py-3.5 bg-gradient-to-r from-blue-600/90 to-blue-700/90 text-white font-bold rounded-lg hover:from-blue-500 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 active:scale-95 text-sm whitespace-nowrap shadow-lg border border-blue-400/40 overflow-hidden"
                 title="Use my current location"
               >
-                {isGettingLocation ? (
-                  <span className="flex items-center">
-                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                {/* Animated background shimmer */}
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+                <span className="relative flex items-center gap-1.5">
+                  {isGettingLocation ? (
+                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                  </span>
-                ) : (
-                  '📍 Near Me'
-                )}
+                  ) : (
+                    <>
+                      <span className="text-xs">📍</span>
+                      <span>Near Me</span>
+                    </>
+                  )}
+                </span>
               </button>
               
-              {/* Search Button - CYAN */}
+              {/* Search Button - CREATIVE STYLE */}
               <button
                 type="submit"
                 disabled={isLoading || isGettingLocation}
-                className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-cyan-700 text-white font-bold rounded-xl hover:from-cyan-700 hover:to-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95 text-base whitespace-nowrap shadow-lg border-2 border-cyan-500/30"
+                className="group relative px-7 py-3.5 bg-gradient-to-r from-cyan-600/90 to-cyan-700/90 text-white font-bold rounded-lg hover:from-cyan-500 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 active:scale-95 text-sm whitespace-nowrap shadow-lg border border-cyan-400/40 overflow-hidden"
               >
-                {isLoading ? (
-                  <span className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Searching...
-                  </span>
-                ) : (
-                  'Search'
-                )}
+                {/* Animated background shimmer */}
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+                <span className="relative flex items-center gap-2">
+                  {isLoading ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span>Searching...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-xs">🔍</span>
+                      <span>Search</span>
+                    </>
+                  )}
+                </span>
               </button>
             </div>
           </div>
