@@ -1,4 +1,4 @@
-# know Before You GO
+# Know Before You GO
 
 Welcome to **VibeFinder** - Your AI-powered restaurant discovery platform!
 
