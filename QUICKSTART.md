@@ -1,4 +1,4 @@
-# 🚀 VibeFinder - Quick Start Guide
+# know Before YOU GO
 
 Welcome to **VibeFinder** - Your AI-powered restaurant discovery platform!
 
