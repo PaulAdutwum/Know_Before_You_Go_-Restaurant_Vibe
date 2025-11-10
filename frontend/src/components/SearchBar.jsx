@@ -96,14 +96,17 @@ function SearchBar({ onSearch, isLoading }) {
             </div>
           </div>
           
-          {/* Helper Text - MORE CONTRAST */}
-          <div className="text-center">
-            <p className="text-sm text-slate-300 font-medium">
-              💡 <span className="font-bold">Try:</span> 
-              <span className="text-cyan-400 font-semibold mx-1">"The Cheesecake Factory"</span>,
-              <span className="text-cyan-400 font-semibold mx-1">"Pizza Boston"</span>,
-              <span className="text-cyan-400 font-semibold mx-1">"Sushi near me"</span>
-              or click "Near Me"
+          {/* Helper Text - ANIMATED & BETTER STYLED */}
+          <div className="text-center mt-2">
+            <p className="text-sm text-slate-400 font-semibold">
+              <span className="text-slate-300">Try:</span>
+              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"The Cheesecake Factory"</span>
+              <span className="text-slate-500">•</span>
+              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"Pizza Boston"</span>
+              <span className="text-slate-500">•</span>
+              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"Sushi near me"</span>
+              <span className="text-slate-500 mx-2">or</span>
+              <span className="text-blue-400 font-bold">"Near Me"</span>
             </p>
           </div>
         </div>
