@@ -23,6 +23,7 @@ class RestaurantResponse(BaseModel):
     distance: Optional[str] = Field(None, description="Distance from user (e.g., '2.3 mi')")
     lat: Optional[float] = Field(None, description="Latitude")
     lng: Optional[float] = Field(None, description="Longitude")
+    photo_url: Optional[str] = Field(None, description="URL of the restaurant's primary photo")
 
     class Config:
         json_schema_extra = {

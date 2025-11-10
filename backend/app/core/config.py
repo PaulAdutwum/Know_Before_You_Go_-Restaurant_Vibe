@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     )
     
     # Google Places API
-    GOOGLE_PLACES_API_KEY: str = os.getenv("GOOGLE_PLACES_API_KEY", "")
+    GOOGLE_PLACES_API_KEY: str = ""
     
     # Scraping Configuration
     SCRAPING_ENABLED: bool = os.getenv("SCRAPING_ENABLED", "true").lower() == "true"
@@ -59,6 +59,7 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = ".env"
+        env_file_encoding = "utf-8"
         case_sensitive = True
 
 

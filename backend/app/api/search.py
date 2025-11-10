@@ -164,11 +164,23 @@ async def search_restaurants(
             if not basic_restaurants and is_restaurant_name:
                 logger.info(f"No results from name search, trying location-based search")
                 basic_restaurants = await google_places.find_restaurants(location, max_results)
+            
+            # Check if we got any restaurants
+            if not basic_restaurants or len(basic_restaurants) == 0:
+                logger.warning(f"No restaurants found for query: '{location}'. This might be an API issue.")
+                # Don't return mock data - return empty list instead
+                return []
                 
         except Exception as e:
-            logger.warning(f"Google Places API error: {e}. Using mock data.")
-            # Return mock data if API fails
-            return get_mock_data()
+            logger.error(f"Google Places API error: {e}")
+            logger.error(f"Error type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            # Don't return mock data - raise the error instead so we can see what's wrong
+            raise HTTPException(
+                status_code=500,
+                detail=f"Google Places API error: {str(e)}. Please check your API key and ensure Places API is enabled."
+            )
         
         # Step 2: Process each restaurant
         enriched_restaurants = []
@@ -195,6 +207,10 @@ async def search_restaurants(
                     if user_lat and user_lng and resto.get('lat') and resto.get('lng'):
                         distance = calculate_distance(user_lat, user_lng, resto['lat'], resto['lng'])
                     
+                    # Get photo URL
+                    photo_url = resto.get('photo_url')
+                    logger.info(f"Hybrid path for {resto['name']}: photo_url={'Found' if photo_url else 'None'}, keys={list(resto.keys())}")
+                    
                     enriched_restaurants.append(
                         RestaurantResponse(
                             name=resto['name'],
@@ -205,7 +221,10 @@ async def search_restaurants(
                             commonComplaints=ml_insights['commonComplaints'],
                             address=resto.get('address'),
                             place_id=resto['place_id'],
-                            distance=distance
+                            distance=distance,
+                            lat=resto.get('lat'),
+                            lng=resto.get('lng'),
+                            photo_url=photo_url
                         )
                     )
                     continue
@@ -231,6 +250,9 @@ async def search_restaurants(
                     distance = calculate_distance(user_lat, user_lng, resto['lat'], resto['lng'])
                 
                 # Step 5: Assemble final data
+                photo_url = resto.get('photo_url')
+                logger.info(f"Assembling response for {resto['name']}: photo_url={'Present' if photo_url else 'Missing'}")
+                
                 enriched_restaurant = RestaurantResponse(
                     name=resto['name'],
                     rating=resto['rating'],
@@ -240,7 +262,10 @@ async def search_restaurants(
                     commonComplaints=complaints,
                     address=resto.get('address'),
                     place_id=resto['place_id'],
-                    distance=distance
+                    distance=distance,
+                    lat=resto.get('lat'),
+                    lng=resto.get('lng'),
+                    photo_url=photo_url
                 )
                 
                 enriched_restaurants.append(enriched_restaurant)
