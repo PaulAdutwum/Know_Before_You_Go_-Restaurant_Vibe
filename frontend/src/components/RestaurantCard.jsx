@@ -7,67 +7,82 @@ function RestaurantCard({ restaurant, userLocation }) {
   // Calculate sentiment color
   const sentimentValue = parseInt(trueSentiment);
   const getSentimentColor = () => {
-    if (sentimentValue >= 80) return 'text-green-400';
-    if (sentimentValue >= 60) return 'text-yellow-400';
-    return 'text-orange-400';
+    if (sentimentValue >= 80) return 'text-success-600';
+    if (sentimentValue >= 60) return 'text-yellow-600';
+    return 'text-accent-600';
   };
 
   const getSentimentBgColor = () => {
-    if (sentimentValue >= 80) return 'bg-green-900/30 border-green-500/50';
-    if (sentimentValue >= 60) return 'bg-yellow-900/30 border-yellow-500/50';
-    return 'bg-orange-900/30 border-orange-500/50';
+    if (sentimentValue >= 80) return 'bg-success-50 border-success-300';
+    if (sentimentValue >= 60) return 'bg-yellow-50 border-yellow-300';
+    return 'bg-accent-50 border-accent-300';
+  };
+
+  const getSentimentGradient = () => {
+    if (sentimentValue >= 80) return 'from-success-400 to-success-600';
+    if (sentimentValue >= 60) return 'from-yellow-400 to-yellow-600';
+    return 'from-accent-400 to-accent-600';
   };
 
   // Check if data is available
   const hasMLData = trueSentiment !== "N/A" && vibeCheck && vibeCheck[0] !== "#NoReviewsAvailable";
 
   return (
-    <div className="bg-card-bg rounded-xl shadow-xl overflow-hidden border border-gray-700 hover:border-primary-light transition-all duration-300 transform hover:scale-[1.02]">
+    <div className="bg-white rounded-2xl shadow-soft overflow-hidden border-2 border-gray-100 hover:border-primary-300 hover:shadow-glow transition-all duration-300 transform hover:-translate-y-1 animate-slide-up">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-primary-blue to-primary-light p-6">
-        <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <h3 className="text-2xl font-bold text-white mb-2">{name}</h3>
-            <div className="flex items-center space-x-4 flex-wrap gap-2">
-              <div className="flex items-center space-x-2">
-                <span className="text-yellow-400 text-xl">⭐</span>
-                <span className="text-white font-semibold text-lg">{rating}</span>
-              </div>
-              {distance && (
-                <div className="flex items-center space-x-2 bg-white/20 px-3 py-1 rounded-full">
-                  <span className="text-white text-sm">📍</span>
-                  <span className="text-white font-medium text-sm">{distance}</span>
+      <div className="bg-gradient-to-r from-primary-500 via-primary-600 to-accent-500 p-6 relative overflow-hidden">
+        {/* Animated background effect */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-2xl"></div>
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex justify-between items-start mb-3">
+            <div className="flex-1">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-sm">{name}</h3>
+              <div className="flex items-center space-x-3 flex-wrap gap-2">
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                  <span className="text-yellow-300 text-xl">⭐</span>
+                  <span className="text-white font-bold text-lg">{rating}</span>
                 </div>
-              )}
+                {distance && (
+                  <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-white text-sm">📍</span>
+                    <span className="text-white font-semibold text-sm">{distance}</span>
+                  </div>
+                )}
+              </div>
             </div>
+            {hasMLData && (
+              <div className={`px-4 py-3 rounded-xl border-2 backdrop-blur-sm bg-white/10 ${getSentimentBgColor().replace('bg-', 'border-')}`}>
+                <p className="text-xs text-white/90 uppercase tracking-wide font-semibold">Sentiment</p>
+                <p className={`text-2xl font-black ${getSentimentColor().replace('text-', 'text-white')}`}>
+                  {trueSentiment}
+                </p>
+              </div>
+            )}
           </div>
-          {hasMLData && (
-            <div className={`px-4 py-2 rounded-lg border-2 ${getSentimentBgColor()}`}>
-              <p className="text-xs text-gray-300 uppercase tracking-wide">True Sentiment</p>
-              <p className={`text-xl font-bold ${getSentimentColor()}`}>{trueSentiment}</p>
+
+          {/* Address */}
+          {address && (
+            <div className="mt-3 flex items-start space-x-2 bg-white/10 backdrop-blur-sm rounded-lg p-2">
+              <span className="text-white/90 text-sm">📍</span>
+              <p className="text-white/90 text-sm font-medium">{address}</p>
             </div>
           )}
         </div>
-
-        {/* Address */}
-        {address && (
-          <div className="mt-3 flex items-start space-x-2">
-            <span className="text-blue-200 text-sm">📍</span>
-            <p className="text-blue-100 text-sm">{address}</p>
-          </div>
-        )}
       </div>
 
       {/* Content Section */}
       <div className="p-6 space-y-6">
         {!hasMLData && (
-          <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-4">
-            <div className="flex items-center space-x-2">
-              <span className="text-yellow-400 text-xl">ℹ️</span>
+          <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4 animate-fade-in">
+            <div className="flex items-center space-x-3">
+              <span className="text-3xl">ℹ️</span>
               <div>
-                <p className="text-yellow-300 font-semibold">Limited Review Data</p>
-                <p className="text-yellow-200 text-sm mt-1">
-                  Google Places API provides limited reviews. Try searching more popular locations or specific restaurant names for AI insights!
+                <p className="text-yellow-800 font-bold text-sm">Limited Review Data</p>
+                <p className="text-yellow-700 text-xs mt-1">
+                  Try searching popular locations or specific restaurant names for AI insights!
                 </p>
               </div>
             </div>
@@ -77,43 +92,49 @@ function RestaurantCard({ restaurant, userLocation }) {
         {/* Vibe Check */}
         {hasMLData && vibeCheck && vibeCheck.length > 0 && (
           <div>
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-white font-semibold flex items-center">
-                <span className="mr-2">✨</span>
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-gray-800 font-bold text-lg flex items-center">
+                <span className="mr-2 text-2xl">✨</span>
                 Vibe Check
               </h4>
               <button
                 onClick={() => setShowChart(!showChart)}
-                className="text-xs bg-primary-blue hover:bg-blue-700 text-white px-3 py-1 rounded-full transition-colors"
+                className="text-xs bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold px-4 py-2 rounded-full transition-all duration-300 transform hover:scale-105 shadow-soft"
               >
                 {showChart ? '📊 Hide Chart' : '📊 Show Chart'}
               </button>
             </div>
 
             {showChart && (
-              <div className="mb-4 bg-primary-dark/50 p-4 rounded-lg">
-                <p className="text-text-gray text-sm mb-2">Sentiment Distribution</p>
-                <div className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-green-400 w-20">Positive</span>
-                    <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">
-                      <div className="bg-green-500 h-full" style={{width: `${sentimentValue || 60}%`}}></div>
+              <div className="mb-4 bg-gray-50 p-5 rounded-xl border-2 border-gray-200 animate-slide-up">
+                <p className="text-gray-600 font-semibold text-sm mb-3">Sentiment Distribution</p>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <span className="text-sm text-success-600 font-semibold w-20">Positive</span>
+                    <div className="flex-1 bg-gray-200 rounded-full h-5 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-success-400 to-success-600 h-full rounded-full transition-all duration-500" 
+                        style={{width: `${sentimentValue || 60}%`}}
+                      ></div>
                     </div>
-                    <span className="text-sm text-white w-12">{sentimentValue || 60}%</span>
+                    <span className="text-sm text-gray-700 font-bold w-12">{sentimentValue || 60}%</span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-400 w-20">Neutral</span>
-                    <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">
-                      <div className="bg-gray-500 h-full" style={{width: `${100 - (sentimentValue || 60) - 10}%`}}></div>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-sm text-gray-500 font-semibold w-20">Neutral</span>
+                    <div className="flex-1 bg-gray-200 rounded-full h-5 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-gray-300 to-gray-400 h-full rounded-full transition-all duration-500" 
+                        style={{width: `${100 - (sentimentValue || 60) - 10}%`}}
+                      ></div>
                     </div>
-                    <span className="text-sm text-white w-12">{100 - (sentimentValue || 60) - 10}%</span>
+                    <span className="text-sm text-gray-700 font-bold w-12">{100 - (sentimentValue || 60) - 10}%</span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-red-400 w-20">Negative</span>
-                    <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">
-                      <div className="bg-red-500 h-full" style={{width: '10%'}}></div>
+                  <div className="flex items-center space-x-3">
+                    <span className="text-sm text-red-500 font-semibold w-20">Negative</span>
+                    <div className="flex-1 bg-gray-200 rounded-full h-5 overflow-hidden">
+                      <div className="bg-gradient-to-r from-red-400 to-red-600 h-full rounded-full transition-all duration-500" style={{width: '10%'}}></div>
                     </div>
-                    <span className="text-sm text-white w-12">10%</span>
+                    <span className="text-sm text-gray-700 font-bold w-12">10%</span>
                   </div>
                 </div>
               </div>
@@ -123,7 +144,7 @@ function RestaurantCard({ restaurant, userLocation }) {
               {vibeCheck.map((vibe, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 bg-gradient-to-r from-primary-blue to-primary-light text-white rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-shadow"
+                  className="px-4 py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold shadow-soft hover:shadow-glow transform hover:scale-105 transition-all duration-300"
                 >
                   {vibe}
                 </span>
@@ -135,18 +156,18 @@ function RestaurantCard({ restaurant, userLocation }) {
         {/* Must-Try Dishes */}
         {hasMLData && mustTryDishes && mustTryDishes.length > 0 && (
           <div>
-            <h4 className="text-white font-semibold mb-3 flex items-center">
-              <span className="mr-2">🍴</span>
+            <h4 className="text-gray-800 font-bold text-lg mb-4 flex items-center">
+              <span className="mr-2 text-2xl">🍴</span>
               Must-Try Dishes
             </h4>
             <ul className="space-y-2">
               {mustTryDishes.map((dish, index) => (
                 <li
                   key={index}
-                  className="flex items-center text-text-gray bg-primary-dark/50 px-4 py-2 rounded-lg"
+                  className="flex items-center text-gray-700 bg-success-50 border-2 border-success-100 px-4 py-3 rounded-xl hover:border-success-300 transition-all duration-300 transform hover:translate-x-1"
                 >
-                  <span className="mr-2 text-accent-orange">▸</span>
-                  {dish}
+                  <span className="mr-3 text-success-500 font-bold text-lg">▸</span>
+                  <span className="font-medium">{dish}</span>
                 </li>
               ))}
             </ul>
@@ -156,18 +177,18 @@ function RestaurantCard({ restaurant, userLocation }) {
         {/* Common Complaints */}
         {hasMLData && commonComplaints && commonComplaints.length > 0 && (
           <div>
-            <h4 className="text-white font-semibold mb-3 flex items-center">
-              <span className="mr-2">⚠️</span>
+            <h4 className="text-gray-800 font-bold text-lg mb-4 flex items-center">
+              <span className="mr-2 text-2xl">⚠️</span>
               Heads Up
             </h4>
             <ul className="space-y-2">
               {commonComplaints.map((complaint, index) => (
                 <li
                   key={index}
-                  className="flex items-center text-text-gray bg-red-900/20 px-4 py-2 rounded-lg border border-red-900/30"
+                  className="flex items-center text-gray-700 bg-red-50 border-2 border-red-100 px-4 py-3 rounded-xl hover:border-red-300 transition-all duration-300"
                 >
-                  <span className="mr-2 text-red-400">•</span>
-                  {complaint}
+                  <span className="mr-3 text-red-500 font-bold">•</span>
+                  <span className="font-medium">{complaint}</span>
                 </li>
               ))}
             </ul>
@@ -176,9 +197,9 @@ function RestaurantCard({ restaurant, userLocation }) {
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 bg-primary-dark/50 border-t border-gray-700">
-        <p className="text-sm text-text-gray text-center">
-          {hasMLData ? 'Powered by AI analysis of hundreds of reviews' : 'Data from Google Places API'}
+      <div className="px-6 py-4 bg-gray-50 border-t-2 border-gray-100">
+        <p className="text-sm text-gray-500 text-center font-medium">
+          {hasMLData ? '🤖 AI-powered analysis from hundreds of reviews' : '📊 Data from Google Places API'}
         </p>
       </div>
     </div>

@@ -2,19 +2,30 @@ import RestaurantCard from './RestaurantCard';
 
 function ResultsContainer({ restaurants, userLocation }) {
   return (
-    <div className="mt-12">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-white mb-2">
+    <div className="mt-12 animate-fade-in">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-3">
           Found {restaurants.length} Restaurant{restaurants.length !== 1 ? 's' : ''}
         </h2>
-        <p className="text-text-gray">
-          {userLocation ? 'Showing restaurants near you with AI-powered insights' : 'Sorted by AI-powered insights and sentiment analysis'}
+        <p className="text-gray-600 text-lg font-medium">
+          {userLocation 
+            ? '📍 Showing restaurants near you with AI-powered insights' 
+            : '✨ Sorted by sentiment analysis and ML insights'}
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+      {/* Results Grid */}
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
         {restaurants.map((restaurant, index) => (
-          <RestaurantCard key={index} restaurant={restaurant} userLocation={userLocation} />
+          <div 
+            key={index}
+            style={{
+              animation: `slideUp 0.5s ease-out ${index * 0.1}s both`
+            }}
+          >
+            <RestaurantCard restaurant={restaurant} userLocation={userLocation} />
+          </div>
         ))}
       </div>
     </div>
@@ -22,4 +33,3 @@ function ResultsContainer({ restaurants, userLocation }) {
 }
 
 export default ResultsContainer;
-

@@ -34,26 +34,33 @@ function SearchBar({ onSearch, isLoading }) {
   };
 
   return (
-    <div className="mt-8">
-      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+    <div className="mt-8 animate-slide-up">
+      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1 relative">
+          {/* Search Input */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 relative group">
               <input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Enter location or restaurant name (e.g., 'Boston' or 'Joe's Pizza')"
-                className="w-full px-6 py-4 bg-card-bg border-2 border-gray-600 rounded-lg text-white placeholder-text-gray focus:outline-none focus:border-primary-light transition-colors text-lg"
+                className="w-full px-6 py-4 bg-white border-2 border-gray-300 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-200 transition-all duration-300 text-lg font-medium shadow-soft"
                 disabled={isLoading || isGettingLocation}
               />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                🔍
+              </div>
             </div>
-            <div className="flex gap-2">
+            
+            {/* Buttons */}
+            <div className="flex gap-3">
+              {/* Near Me Button */}
               <button
                 type="button"
                 onClick={handleUseMyLocation}
                 disabled={isLoading || isGettingLocation}
-                className="px-6 py-4 bg-primary-blue text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-primary-blue/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 text-lg whitespace-nowrap"
+                className="px-6 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold rounded-xl hover:from-primary-600 hover:to-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-glow active:scale-95 text-lg whitespace-nowrap shadow-soft"
                 title="Use my current location"
               >
                 {isGettingLocation ? (
@@ -67,10 +74,13 @@ function SearchBar({ onSearch, isLoading }) {
                   '📍 Near Me'
                 )}
               </button>
+              
+              {/* Search Button */}
               <button
                 type="submit"
                 disabled={isLoading || isGettingLocation}
-                className="px-8 py-4 bg-gradient-to-r from-accent-orange to-orange-600 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95 text-lg whitespace-nowrap"
+                className="px-8 py-4 bg-gradient-to-r from-accent-500 via-accent-600 to-accent-500 bg-size-200 bg-pos-0 hover:bg-pos-100 text-white font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-accent-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 transform hover:scale-105 hover:shadow-glow-orange active:scale-95 text-lg whitespace-nowrap shadow-soft"
+                style={{ backgroundSize: '200% auto' }}
               >
                 {isLoading ? (
                   <span className="flex items-center">
@@ -86,9 +96,17 @@ function SearchBar({ onSearch, isLoading }) {
               </button>
             </div>
           </div>
-          <p className="text-sm text-text-gray text-center">
-            💡 Try: <span className="text-primary-light">"The Cheesecake Factory"</span>, <span className="text-primary-light">"Pizza Boston"</span>, <span className="text-primary-light">"Sushi near me"</span>, or click "Near Me"
-          </p>
+          
+          {/* Helper Text */}
+          <div className="text-center">
+            <p className="text-sm text-gray-500">
+              💡 <span className="font-semibold">Try:</span> 
+              <span className="text-primary-600 font-medium mx-1">"The Cheesecake Factory"</span>,
+              <span className="text-primary-600 font-medium mx-1">"Pizza Boston"</span>,
+              <span className="text-primary-600 font-medium mx-1">"Sushi near me"</span>
+              or click "Near Me"
+            </p>
+          </div>
         </div>
       </form>
     </div>
@@ -96,4 +114,3 @@ function SearchBar({ onSearch, isLoading }) {
 }
 
 export default SearchBar;
-
