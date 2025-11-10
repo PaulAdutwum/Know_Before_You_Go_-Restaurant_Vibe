@@ -45,8 +45,11 @@ function App() {
     }
 
     try {
+      // Use environment variable for backend URL (defaults to localhost for development)
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      
       // Build API URL with user location if available
-      let apiUrl = `http://localhost:8000/api/v1/search?location=${encodeURIComponent(location)}&max_results=10`;
+      let apiUrl = `${API_BASE_URL}/api/v1/search?location=${encodeURIComponent(location)}&max_results=10`;
       
       if (coords && coords.lat && coords.lng) {
         apiUrl += `&user_lat=${coords.lat}&user_lng=${coords.lng}`;
@@ -107,7 +110,8 @@ function App() {
       */
     } catch (err) {
       console.error('API Error:', err);
-      setError('Failed to fetch restaurants. Make sure the backend is running on http://localhost:8000');
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      setError(`Failed to fetch restaurants. Make sure the backend is running on ${API_BASE_URL}`);
       setIsLoading(false);
     }
   };
