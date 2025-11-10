@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+venv/
+env/
+ENV/
+
+# Environment
+.env
+.env.local
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Database
+*.db
+*.sqlite3
+
+# Testing
+.pytest_cache/
+coverage/
+.coverage
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Scraping
+*.crx
+chromedriver
+geckodriver
+selenium-wire/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Application logs (from start_all.sh)
+/tmp/vibefinder_*.log
