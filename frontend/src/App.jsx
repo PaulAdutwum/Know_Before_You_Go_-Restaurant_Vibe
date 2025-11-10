@@ -99,10 +99,10 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-              🍽️ VibeFinder
+              🍽️ Know Before You Go
             </h1>
             <p className="text-blue-100 text-lg">
-              Discover the perfect dining experience with AI-powered insights
+              Real sentiment, honest insights, smart dining decisions
             </p>
           </div>
         </div>
@@ -121,7 +121,7 @@ function App() {
         {isLoading && (
           <div className="mt-12 text-center">
             <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-accent-orange"></div>
-            <p className="mt-4 text-text-gray text-lg">Finding the best vibes for you...</p>
+            <p className="mt-4 text-text-gray text-lg">Analyzing reviews and finding insights...</p>
           </div>
         )}
 
