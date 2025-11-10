@@ -134,11 +134,15 @@ function App() {
               </span>
             </h1>
             
-            {/* Strategic Subtitle - VISIBLE */}
-            <p className="text-slate-300 text-lg sm:text-xl font-semibold max-w-3xl mx-auto leading-relaxed mt-6 animate-fade-in">
-              Real sentiment from thousands of reviews. Must-try dishes. Common complaints.
-              <span className="block mt-2 text-cyan-400 font-bold">All before you make a reservation.</span>
-            </p>
+            {/* Strategic Subtitle - HORIZONTAL & COOL */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-6 animate-fade-in max-w-4xl mx-auto">
+              <span className="text-slate-300 text-lg sm:text-xl font-semibold">Real sentiment from thousands of reviews.</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-300 text-lg sm:text-xl font-semibold">Must-try dishes.</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-300 text-lg sm:text-xl font-semibold">Common complaints.</span>
+              <span className="text-cyan-400 text-lg sm:text-xl font-bold">Check before your reservation.</span>
+            </div>
           </div>
         </div>
       </header>
