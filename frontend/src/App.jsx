@@ -93,9 +93,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background-light via-background to-background-dark">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-primary-500 via-primary-600 to-accent-500 shadow-xl relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950">
+      {/* Header - BLUISH THEME */}
+      <header className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 shadow-2xl relative overflow-hidden border-b-4 border-blue-400/30">
         {/* Animated background shapes */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-1/4 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse-slow"></div>
@@ -103,23 +103,23 @@ function App() {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 relative z-10">
-          {/* Logo in top left */}
+          {/* Logo in top left - LESS EMOJI */}
           <div className="absolute top-4 left-4 sm:left-8 flex items-center space-x-2 animate-fade-in">
             <div className="bg-white/20 backdrop-blur-sm p-2 rounded-xl border-2 border-white/30">
-              <span className="text-3xl">🍽️</span>
+              <span className="text-3xl font-black text-white">KB</span>
             </div>
             <div className="hidden sm:block">
-              <p className="text-white font-bold text-sm">Know Before</p>
-              <p className="text-white/80 font-semibold text-xs -mt-1">You Go</p>
+              <p className="text-white font-black text-sm">Know Before</p>
+              <p className="text-white/90 font-bold text-xs -mt-1">You Go</p>
             </div>
           </div>
 
           <div className="text-center animate-fade-in pt-12 sm:pt-0">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 tracking-tight drop-shadow-lg">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-4 tracking-tight drop-shadow-2xl">
               Find the Vibe of Your Restaurant<br />
-              <span className="text-white/90">Before You Go</span>
+              <span className="text-white/95">Before You Go</span>
             </h1>
-            <p className="text-white/95 text-lg sm:text-xl font-semibold max-w-3xl mx-auto leading-relaxed">
+            <p className="text-white text-lg sm:text-xl font-bold max-w-3xl mx-auto leading-relaxed">
               Understand the true atmosphere, discover must-try dishes, and plan the perfect meal—all before making a reservation
             </p>
           </div>
@@ -131,10 +131,10 @@ function App() {
         <SearchBar onSearch={handleSearch} isLoading={isLoading} />
         
         {error && (
-          <div className="mt-6 bg-red-50 border-2 border-red-300 text-red-700 px-6 py-4 rounded-xl shadow-soft animate-slide-up">
+          <div className="mt-6 bg-red-900/30 border-2 border-red-500 text-red-200 px-6 py-4 rounded-xl shadow-xl animate-slide-up">
             <div className="flex items-center">
               <span className="text-2xl mr-3">⚠️</span>
-              <p className="font-medium">{error}</p>
+              <p className="font-bold">{error}</p>
             </div>
           </div>
         )}
@@ -142,11 +142,11 @@ function App() {
         {isLoading && (
           <div className="mt-12 text-center animate-fade-in">
             <div className="inline-block relative">
-              <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-primary-500"></div>
-              <div className="absolute top-0 left-0 animate-ping rounded-full h-20 w-20 border-4 border-accent-400 opacity-20"></div>
+              <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-cyan-500 border-opacity-70"></div>
+              <div className="absolute top-0 left-0 animate-ping rounded-full h-20 w-20 border-4 border-blue-400 opacity-20"></div>
             </div>
-            <p className="mt-6 text-gray-700 text-xl font-semibold animate-pulse">
-              ✨ Analyzing reviews and finding insights...
+            <p className="mt-6 text-white text-xl font-black animate-pulse">
+              Analyzing reviews and finding insights...
             </p>
           </div>
         )}
@@ -154,7 +154,7 @@ function App() {
         {!isLoading && hasSearched && restaurants.length === 0 && !error && (
           <div className="mt-12 text-center animate-slide-up">
             <div className="text-6xl mb-4">🔍</div>
-            <p className="text-gray-600 text-xl font-medium">No restaurants found. Try a different location.</p>
+            <p className="text-slate-300 text-xl font-bold">No restaurants found. Try a different location.</p>
           </div>
         )}
 
@@ -165,31 +165,31 @@ function App() {
         {!hasSearched && !isLoading && (
           <div className="mt-16 text-center animate-slide-up">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
                 Plan the Perfect Dining Experience
               </h2>
-              <p className="text-gray-700 text-xl font-medium mb-16 max-w-3xl mx-auto">
-                Our AI analyzes thousands of reviews to reveal what you <span className="text-primary-600 font-bold">really</span> need to know
+              <p className="text-slate-300 text-xl font-bold mb-16 max-w-3xl mx-auto">
+                Our AI analyzes thousands of reviews to reveal what you <span className="text-cyan-400 font-black">really</span> need to know
               </p>
               <div className="grid md:grid-cols-3 gap-10 mt-8">
-                <div className="bg-gradient-to-br from-primary-50 to-primary-100 p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-4 border-primary-200">
-                  <div className="text-7xl mb-6 animate-bounce-slow">🔍</div>
-                  <h3 className="text-gray-900 font-black text-2xl mb-4">1. Search Any Restaurant</h3>
-                  <p className="text-gray-700 text-lg leading-relaxed font-medium">
+                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-blue-500/50">
+                  <div className="text-6xl mb-6 font-black text-cyan-400">01</div>
+                  <h3 className="text-white font-black text-2xl mb-4">Search Any Restaurant</h3>
+                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
                     Enter a location, cuisine type, or specific restaurant name. We'll find it instantly.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-accent-50 to-accent-100 p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-4 border-accent-200">
-                  <div className="text-7xl mb-6" style={{animation: 'bounce 2s infinite', animationDelay: '0.2s'}}>🤖</div>
-                  <h3 className="text-gray-900 font-black text-2xl mb-4">2. AI Reads 1000s of Reviews</h3>
-                  <p className="text-gray-700 text-lg leading-relaxed font-medium">
+                <div className="bg-gradient-to-br from-cyan-900/40 to-cyan-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-cyan-500/50">
+                  <div className="text-6xl mb-6 font-black text-blue-400">02</div>
+                  <h3 className="text-white font-black text-2xl mb-4">AI Reads 1000s of Reviews</h3>
+                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
                     Advanced ML analyzes sentiment, detects vibes, and finds patterns humans miss.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-success-50 to-success-100 p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border-4 border-success-200">
-                  <div className="text-7xl mb-6" style={{animation: 'bounce 2s infinite', animationDelay: '0.4s'}}>✨</div>
-                  <h3 className="text-gray-900 font-black text-2xl mb-4">3. Make Smart Decisions</h3>
-                  <p className="text-gray-700 text-lg leading-relaxed font-medium">
+                <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm p-10 rounded-3xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 transform hover:-translate-y-3 border-2 border-blue-500/50">
+                  <div className="text-6xl mb-6 font-black text-cyan-400">03</div>
+                  <h3 className="text-white font-black text-2xl mb-4">Make Smart Decisions</h3>
+                  <p className="text-slate-300 text-lg leading-relaxed font-semibold">
                     Get honest insights: true sentiment, must-try dishes, and what to watch out for.
                   </p>
                 </div>
@@ -199,81 +199,81 @@ function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-t-4 border-primary-500">
+      {/* Footer - BLUISH THEME */}
+      <footer className="mt-20 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 border-t-4 border-cyan-500/50">
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
           {/* Main Footer Content */}
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             {/* About Section */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="bg-primary-500 p-2 rounded-xl">
-                  <span className="text-3xl">🍽️</span>
+                <div className="bg-blue-500 p-2 rounded-xl">
+                  <span className="text-2xl font-black text-white">KB</span>
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-xl">Know Before You Go</h3>
-                  <p className="text-gray-400 text-sm">Smart Dining Decisions</p>
+                  <h3 className="text-white font-black text-xl">Know Before You Go</h3>
+                  <p className="text-slate-300 text-sm font-bold">Smart Dining Decisions</p>
                 </div>
               </div>
-              <p className="text-gray-300 text-base leading-relaxed mb-4">
-                We analyze <span className="text-primary-400 font-bold">thousands of restaurant reviews</span> using advanced 
-                <span className="text-accent-400 font-bold"> Natural Language Processing (NLP)</span> and 
-                <span className="text-success-400 font-bold"> Machine Learning</span> to reveal the true vibe, sentiment, 
+              <p className="text-slate-200 text-base leading-relaxed mb-4 font-medium">
+                We analyze <span className="text-cyan-400 font-black">thousands of restaurant reviews</span> using advanced 
+                <span className="text-blue-400 font-black"> Natural Language Processing (NLP)</span> and 
+                <span className="text-cyan-400 font-black"> Machine Learning</span> to reveal the true vibe, sentiment, 
                 and must-know insights about any restaurant—before you make a reservation.
               </p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-slate-300 text-sm font-semibold">
                 Stop wasting time reading hundreds of reviews. Let AI do it for you in seconds.
               </p>
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-gradient-to-br from-primary-900/50 to-accent-900/50 p-6 rounded-2xl border-2 border-primary-700/50">
-              <h4 className="text-white font-bold text-lg mb-4">📊 Platform Stats</h4>
+            <div className="bg-gradient-to-br from-blue-900/50 to-cyan-900/50 p-6 rounded-2xl border-2 border-cyan-500/50">
+              <h4 className="text-white font-black text-lg mb-4">Platform Stats</h4>
               <div className="space-y-3">
                 <div>
-                  <p className="text-3xl font-black text-primary-400">100K+</p>
-                  <p className="text-gray-400 text-sm">Reviews Analyzed</p>
+                  <p className="text-3xl font-black text-cyan-400">100K+</p>
+                  <p className="text-slate-300 text-sm font-bold">Reviews Analyzed</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-black text-accent-400">10K+</p>
-                  <p className="text-gray-400 text-sm">Restaurants Covered</p>
+                  <p className="text-3xl font-black text-blue-400">10K+</p>
+                  <p className="text-slate-300 text-sm font-bold">Restaurants Covered</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-black text-success-400">89%</p>
-                  <p className="text-gray-400 text-sm">Sentiment Accuracy</p>
+                  <p className="text-3xl font-black text-green-400">89%</p>
+                  <p className="text-slate-300 text-sm font-bold">Sentiment Accuracy</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Data Sources */}
-          <div className="border-t border-gray-700 pt-6 mb-6">
-            <h4 className="text-white font-semibold text-sm mb-3">🔗 Powered By</h4>
+          <div className="border-t border-slate-700 pt-6 mb-6">
+            <h4 className="text-white font-black text-sm mb-3">Powered By</h4>
             <div className="flex flex-wrap gap-3">
-              <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-gray-700">
+              <span className="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-sm font-bold border border-slate-600">
                 Google Places API
               </span>
-              <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-gray-700">
-                VADER Sentiment Analysis
+              <span className="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-sm font-bold border border-slate-600">
+                VADER Sentiment
               </span>
-              <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-gray-700">
+              <span className="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-sm font-bold border border-slate-600">
                 LDA Topic Modeling
               </span>
-              <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-gray-700">
+              <span className="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-sm font-bold border border-slate-600">
                 TF-IDF Extraction
               </span>
-              <span className="bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm font-medium border border-gray-700">
+              <span className="bg-slate-800 text-slate-200 px-4 py-2 rounded-lg text-sm font-bold border border-slate-600">
                 Python ML Pipeline
               </span>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-700 pt-6 text-center">
-            <p className="text-gray-400 text-sm">
+          <div className="border-t border-slate-700 pt-6 text-center">
+            <p className="text-slate-300 text-sm font-bold">
               © {new Date().getFullYear()} Know Before You Go • Built with React, FastAPI, and AI/ML
             </p>
-            <p className="text-gray-500 text-xs mt-2">
+            <p className="text-slate-400 text-xs mt-2 font-semibold">
               Making every dining decision smarter, one insight at a time
             </p>
           </div>
