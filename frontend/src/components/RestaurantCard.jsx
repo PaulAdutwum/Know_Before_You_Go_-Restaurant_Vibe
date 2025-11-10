@@ -11,9 +11,9 @@ function RestaurantCard({ restaurant, userLocation }) {
   const hasMLData = trueSentiment !== "N/A" && vibeCheck && vibeCheck[0] !== "#NoReviewsAvailable";
 
   return (
-    <div className="bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950 rounded-2xl shadow-2xl overflow-hidden border-2 border-slate-700 hover:border-blue-500 transition-all duration-500 transform hover:-translate-y-1">
+    <div className="bg-gradient-to-br from-slate-900 via-slate-850 to-blue-950 rounded-2xl shadow-2xl overflow-hidden border-2 border-slate-700 hover:border-blue-600 transition-all duration-500 transform hover:-translate-y-1">
       {/* Header Section - BLUISH THEME */}
-      <div className="bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 p-5 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 p-5 relative overflow-hidden">
         {/* Subtle animated background */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-24 h-24 bg-white rounded-full blur-2xl animate-pulse-slow"></div>
@@ -82,7 +82,7 @@ function RestaurantCard({ restaurant, userLocation }) {
               </h4>
               <button
                 onClick={() => setShowChart(!showChart)}
-                className="text-xs bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-3 py-1.5 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md"
+                className="text-xs bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-3 py-1.5 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md"
               >
                 {showChart ? '📊 Hide' : '📊 Chart'}
               </button>
@@ -110,7 +110,7 @@ function RestaurantCard({ restaurant, userLocation }) {
                     <span className="text-xs text-white font-bold w-20">− Neutral</span>
                     <div className="flex-1 bg-slate-800 rounded-full h-5 overflow-hidden border border-slate-700">
                       <div 
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full transition-all duration-700 shadow-md" 
+                        className="bg-gradient-to-r from-blue-600 to-blue-700 h-full rounded-full transition-all duration-700 shadow-md" 
                         style={{width: `${100 - (sentimentValue || 60) - 10}%`}}
                       ></div>
                     </div>
@@ -134,7 +134,7 @@ function RestaurantCard({ restaurant, userLocation }) {
               {vibeCheck.map((vibe, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-sm font-bold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 border border-blue-400/50"
+                  className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full text-sm font-bold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 border border-blue-500/50"
                 >
                   {vibe}
                 </span>
