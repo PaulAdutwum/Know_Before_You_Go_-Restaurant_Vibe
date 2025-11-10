@@ -122,20 +122,20 @@ function App() {
           </div>
 
           {/* Main Content - STRATEGIC & CATCHY */}
-          <div className="text-center animate-fade-in pt-16 sm:pt-14 pb-6">
-            {/* Animated Title - SMALLER & MORE STRATEGIC */}
+          <div className="text-center pt-20 sm:pt-16 pb-8 relative z-20">
+            {/* Animated Title - VISIBLE */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-5 tracking-tight drop-shadow-2xl leading-tight">
-              <span className="inline-block animate-slide-up opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.2s forwards'}}>
+              <span className="inline-block animate-slide-up">
                 Know Before You Go
               </span>
               <br />
-              <span className="inline-block text-cyan-400 animate-slide-up opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.4s forwards'}}>
+              <span className="inline-block text-cyan-400 animate-slide-up" style={{animationDelay: '0.2s'}}>
                 Every Restaurant's True Vibe
               </span>
             </h1>
             
-            {/* Strategic Subtitle */}
-            <p className="text-slate-300 text-lg sm:text-xl font-semibold max-w-3xl mx-auto leading-relaxed mt-6 animate-fade-in opacity-0" style={{animation: 'fadeIn 1s ease-out 0.6s forwards'}}>
+            {/* Strategic Subtitle - VISIBLE */}
+            <p className="text-slate-300 text-lg sm:text-xl font-semibold max-w-3xl mx-auto leading-relaxed mt-6 animate-fade-in">
               Real sentiment from thousands of reviews. Must-try dishes. Common complaints.
               <span className="block mt-2 text-cyan-400 font-bold">All before you make a reservation.</span>
             </p>
@@ -182,28 +182,28 @@ function App() {
         {!hasSearched && !isLoading && (
           <div className="mt-12 text-center">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-black text-white mb-3 opacity-0 animate-fade-in" style={{animation: 'fadeIn 0.8s ease-out 0.2s forwards'}}>
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-3 animate-fade-in">
                 How It Works
               </h2>
-              <p className="text-slate-300 text-lg font-semibold mb-12 max-w-2xl mx-auto opacity-0 animate-fade-in" style={{animation: 'fadeIn 0.8s ease-out 0.4s forwards'}}>
+              <p className="text-slate-300 text-lg font-semibold mb-12 max-w-2xl mx-auto animate-fade-in">
                 AI-powered insights from thousands of real reviews
               </p>
               <div className="grid md:grid-cols-3 gap-6 mt-8">
-                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.6s forwards'}}>
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 animate-slide-up">
                   <div className="text-5xl mb-5 font-black text-cyan-400">01</div>
                   <h3 className="text-white font-black text-xl mb-3">Search</h3>
                   <p className="text-slate-300 text-base leading-relaxed font-medium">
                     Location, cuisine, or restaurant name. Instant results.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 0.8s forwards'}}>
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 animate-slide-up" style={{animationDelay: '0.2s'}}>
                   <div className="text-5xl mb-5 font-black text-blue-400">02</div>
                   <h3 className="text-white font-black text-xl mb-3">AI Analysis</h3>
                   <p className="text-slate-300 text-base leading-relaxed font-medium">
                     ML analyzes sentiment, vibes, and patterns from thousands of reviews.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 opacity-0" style={{animation: 'slideUp 0.8s ease-out 1s forwards'}}>
+                <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-sm p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-slate-700/50 animate-slide-up" style={{animationDelay: '0.4s'}}>
                   <div className="text-5xl mb-5 font-black text-cyan-400">03</div>
                   <h3 className="text-white font-black text-xl mb-3">Decide</h3>
                   <p className="text-slate-300 text-base leading-relaxed font-medium">
