@@ -33,7 +33,7 @@ Edit `backend/.env` with your actual values:
 
 ```env
 # ===== REQUIRED =====
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 
 # ===== Database (Choose One) =====
 # Option A: PostgreSQL (Recommended)
@@ -101,7 +101,7 @@ In Railway Dashboard → Your Backend Service → Variables:
 
 ```env
 # Google API (REQUIRED - Add your actual key)
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 
 # Auto-provided by Railway (Use these exact values!)
 DATABASE_URL=${{Postgres.DATABASE_URL}}
@@ -357,7 +357,7 @@ redis-cli ping
 ### **Local Development (.env file):**
 
 ```env
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 DATABASE_URL=postgresql://vibefinder:vibefinder@localhost:5432/vibefinder
 REDIS_URL=redis://localhost:6379/0
 DEBUG=true
@@ -370,7 +370,7 @@ SCRAPING_DELAY_SECONDS=2
 ### **Railway Production:**
 
 ```env
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 DATABASE_URL=${{Postgres.DATABASE_URL}}
 REDIS_URL=${{Redis.REDIS_URL}}
 PORT=${{PORT}}

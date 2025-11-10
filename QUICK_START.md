@@ -52,8 +52,8 @@ python setup_db.py
 Your `backend/.env` should already have:
 
 ```bash
-# Already configured ✅
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+# Add your Google Places API key
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 DATABASE_URL=postgresql://vibefinder:vibefinder@localhost:5432/vibefinder
 REDIS_URL=redis://localhost:6379/0
 

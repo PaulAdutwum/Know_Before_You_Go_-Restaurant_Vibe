@@ -7,6 +7,9 @@ ENV/
 # Environment
 .env
 .env.local
+.env.production
+backend/.env
+*.env
 
 # Build
 dist/

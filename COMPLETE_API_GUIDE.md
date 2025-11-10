@@ -88,9 +88,9 @@ redis-cli ping
 - Gets basic info: name, address, rating
 - Gets place_id for scraping
 
-**Status:** ✅ You already have this
+**Status:** ⚠️ Add your API key
 ```bash
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 ```
 
 **No additional setup needed!**

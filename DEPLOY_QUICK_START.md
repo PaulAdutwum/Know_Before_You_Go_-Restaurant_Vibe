@@ -42,7 +42,7 @@ git push -u origin main
 In Railway project → Variables:
 
 ```
-GOOGLE_PLACES_API_KEY=AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 PORT=8000
 PYTHONPATH=/app/backend
 SCRAPING_ENABLED=true

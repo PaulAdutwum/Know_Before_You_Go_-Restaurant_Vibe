@@ -193,7 +193,7 @@ Final Result:
 ```
 ✅ Google Places API
    └─ Purpose: Find restaurants
-   └─ You already have: AIzaSyCvGpQYjkc_laF27tL8z_r6EpeQ0Q6U6VI
+   └─ Get your key: https://console.cloud.google.com/apis/credentials
 
 ✅ Google Maps Scraping
    └─ Purpose: Get 100+ reviews
