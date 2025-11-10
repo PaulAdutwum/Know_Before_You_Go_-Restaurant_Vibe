@@ -108,18 +108,34 @@ function SearchBar({ onSearch, isLoading }) {
             </div>
           </div>
           
-          {/* Helper Text - ANIMATED & BETTER STYLED */}
-          <div className="text-center mt-2">
-            <p className="text-sm text-slate-400 font-semibold">
-              <span className="text-slate-300">Try:</span>
-              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"The Cheesecake Factory"</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"Pizza Boston"</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-cyan-400 font-bold mx-2 hover:text-cyan-300 transition-colors cursor-pointer">"Sushi near me"</span>
-              <span className="text-slate-500 mx-2">or</span>
-              <span className="text-blue-400 font-bold">"Near Me"</span>
-            </p>
+          {/* Helper Text - DARK TRANSPARENT BUTTONS */}
+          <div className="mt-4 flex flex-wrap items-center gap-2 justify-start">
+            <span className="text-slate-400 text-sm font-semibold mr-1">Try:</span>
+            <button
+              onClick={() => onSearch("The Cheesecake Factory")}
+              className="px-4 py-2 bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-lg text-cyan-400 text-sm font-bold hover:bg-slate-700/60 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+              "The Cheesecake Factory"
+            </button>
+            <button
+              onClick={() => onSearch("Pizza Boston")}
+              className="px-4 py-2 bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-lg text-cyan-400 text-sm font-bold hover:bg-slate-700/60 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+              "Pizza Boston"
+            </button>
+            <button
+              onClick={() => onSearch("Sushi near me")}
+              className="px-4 py-2 bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-lg text-cyan-400 text-sm font-bold hover:bg-slate-700/60 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+              "Sushi near me"
+            </button>
+            <span className="text-slate-500 text-sm mx-1">or</span>
+            <button
+              onClick={handleUseMyLocation}
+              className="px-4 py-2 bg-slate-800/60 backdrop-blur-sm border border-blue-500/50 rounded-lg text-blue-400 text-sm font-bold hover:bg-slate-700/60 hover:border-blue-400 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+              "Near Me"
+            </button>
           </div>
         </div>
       </form>
