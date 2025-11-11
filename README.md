@@ -1,10 +1,11 @@
-# 🍽️ VibeFinder
+# 🍽️ Know Before You Go
 
-**AI-Powered Restaurant Discovery Platform**
+Know Before You Go: Spend 30 minutes scrolling, or 2 minutes deciding?
 
-VibeFinder uses advanced Natural Language Processing (NLP) and Machine Learning to analyze thousands of restaurant reviews and provide authentic insights beyond traditional ratings.
+This AI-powered app does the heavy lifting for you. It analyzes 100,000+ unstructured reviews to find the real vibe, must-try dishes, and hidden complaints to help you make the right choice, fast.
 
-## 🏗️ Architecture
+
+##  Architecture
 
 This project follows a professional **3-Tier Architecture**:
 
@@ -25,7 +26,7 @@ This project follows a professional **3-Tier Architecture**:
 - Topic Modeling for "vibe detection" (LDA)
 - Keyword Extraction for must-try dishes and complaints
 
-## 🚀 Features
+## Features
 
 - **True Sentiment Analysis**: Goes beyond star ratings to show real customer sentiment
 - **Vibe Check**: AI-detected ambiance tags (#Romantic, #Loud, #FamilyFriendly, etc.)
@@ -77,7 +78,7 @@ The API will run on `http://localhost:8000`
 - spaCy (Named Entity Recognition)
 - BeautifulSoup/Scrapy (Web Scraping)
 
-## 📝 API Endpoints
+##  API Endpoints
 
 ### `GET /api/v1/search`
 
@@ -100,7 +101,7 @@ Search for restaurants by location.
 ]
 ```
 
-## 🎯 Project Phases
+##  Project Phases
 
 - [x] **Phase 1**: Front-End Setup
   - [x] React + Vite + Tailwind
@@ -124,7 +125,7 @@ Search for restaurants by location.
   - [ ] Testing & Optimization
   - [ ] Deployment
 
-## 🤝 Contributing
+## Contributing
 
 This is a project showcasing full-stack development with ML integration.
 
@@ -134,5 +135,4 @@ MIT License
 
 ---
 
-**Built with 💙 by combining modern web development with cutting-edge ML**
 
