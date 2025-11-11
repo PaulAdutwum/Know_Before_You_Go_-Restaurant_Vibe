@@ -126,7 +126,7 @@ Search for restaurants by location.
 
 ## 🤝 Contributing
 
-This is a demonstration project showcasing full-stack development with ML integration.
+This is a project showcasing full-stack development with ML integration.
 
 ## 📄 License
 
