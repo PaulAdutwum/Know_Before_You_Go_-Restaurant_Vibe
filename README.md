@@ -1,4 +1,4 @@
-# 🍽️ Know Before You Go
+# Know Before You Go
 
 Know Before You Go: Spend 30 minutes scrolling, or 2 minutes deciding?
 
