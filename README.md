@@ -100,7 +100,6 @@ Search for restaurants by location.
   }
 ]
 ```
-
 ##  Project Phases
 
 - [x] **Phase 1**: Front-End Setup
