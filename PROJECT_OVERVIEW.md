@@ -2,7 +2,7 @@
 
 ## 🎯 Project Vision
 
-**VibeFinder** is a sophisticated restaurant discovery platform that goes beyond traditional ratings. Using advanced Natural Language Processing (NLP) and Machine Learning, it analyzes thousands of restaurant reviews to provide authentic insights about:
+**Know Before You Go** is a sophisticated restaurant discovery platform that goes beyond traditional ratings. Using advanced Natural Language Processing (NLP) and Machine Learning, it analyzes thousands of restaurant reviews to provide authentic insights about:
 
 - **True Sentiment**: Real customer sentiment beyond star ratings
 - **Vibe Check**: AI-detected ambiance tags (#Romantic, #Loud, #FamilyFriendly, etc.)
@@ -65,7 +65,7 @@ VibeFinder/
 ├── 📄 PROJECT_OVERVIEW.md          # This file
 ├── 📄 .gitignore                   # Git ignore rules
 │
-├── 🎨 frontend/                    # FRONTEND (Tier 1)
+├──  frontend/                    # FRONTEND (Tier 1)
 │   ├── src/
 │   │   ├── App.jsx                 # Main application container
 │   │   ├── index.css               # Global styles + Tailwind
@@ -82,7 +82,7 @@ VibeFinder/
 │   ├── postcss.config.js           # PostCSS configuration
 │   └── vite.config.js              # Vite build configuration
 │
-├── 🚀 backend/                     # BACKEND (Tier 2) + ML
+├──  backend/                     # BACKEND (Tier 2) + ML
 │   ├── app/
 │   │   ├── __init__.py
 │   │   ├── main.py                 # FastAPI application entry
@@ -117,8 +117,8 @@ VibeFinder/
 │   ├── .gitignore                  # Git ignore rules
 │   └── README.md                   # Backend documentation
 │
-├── 🚀 START_FRONTEND.sh            # Frontend startup script
-└── 🚀 START_BACKEND.sh             # Backend startup script
+├──  START_FRONTEND.sh            # Frontend startup script
+└──  START_BACKEND.sh             # Backend startup script
 ```
 
 ## 🔬 Technology Deep Dive
@@ -126,16 +126,19 @@ VibeFinder/
 ### Frontend Stack
 
 **React 18** - Modern JavaScript framework
+
 - Component-based architecture
 - Hooks for state management
 - Virtual DOM for performance
 
 **Vite** - Next-generation build tool
+
 - Lightning-fast hot reload
 - Optimized production builds
 - ES modules support
 
 **Tailwind CSS** - Utility-first CSS framework
+
 - Custom color scheme (dark blue, white, orange)
 - Responsive design built-in
 - No CSS files needed
@@ -143,17 +146,20 @@ VibeFinder/
 ### Backend Stack
 
 **FastAPI** - Modern Python web framework
+
 - Automatic API documentation (OpenAPI/Swagger)
 - Async/await support for concurrency
 - Type hints with Pydantic validation
 - Fast performance (comparable to Node.js)
 
 **PostgreSQL** - Production-grade database
+
 - ACID compliance
 - Relational data integrity
 - Scalable and reliable
 
 **SQLAlchemy** - Python ORM
+
 - Database abstraction layer
 - Easy migrations with Alembic
 - Relationship management
@@ -161,18 +167,21 @@ VibeFinder/
 ### ML/NLP Stack
 
 **VADER (Sentiment Analysis)**
+
 - Valence Aware Dictionary and sEntiment Reasoner
 - Optimized for social media and reviews
 - Understands slang, emoticons, negation
 - Fast and accurate (no training needed)
 
 **scikit-learn (Topic Modeling & Keywords)**
+
 - LDA (Latent Dirichlet Allocation) for topics
 - TF-IDF (Term Frequency-Inverse Document Frequency)
 - Proven, battle-tested algorithms
 - Efficient implementation
 
 **NLTK (Natural Language Toolkit)**
+
 - Text preprocessing
 - Tokenization and stopwords
 - Linguistic data processing
@@ -220,20 +229,20 @@ User types "Lewiston, Maine" → Clicks Search
     For Each Restaurant:
         3. Call ReviewScraper.scrape_reviews(place_id)
             → Get reviews from Google Places
-        
+
         4. Run ML Pipeline:
             a. SentimentAnalyzer.analyze(reviews)
                → "82% Positive"
-            
+
             b. TopicModeler.extract_vibes(reviews)
                → ["#Loud", "#GoodForGroups"]
-            
+
             c. KeywordExtractor.extract_dishes(reviews)
                → ["Spicy Rigatoni", "Garlic Knots"]
-            
+
             d. KeywordExtractor.extract_complaints(reviews)
                → ["Slow service on weekends"]
-        
+
         5. Assemble RestaurantResponse object
                 ↓
     Backend Returns JSON Array
@@ -255,11 +264,12 @@ User types "Lewiston, Maine" → Clicks Search
     User Sees Beautiful Restaurant Cards! ✨
 ```
 
-## 🧠 ML Pipeline Details
+## ML Pipeline Details
 
 ### 1. Sentiment Analysis (VADER)
 
 **How it works:**
+
 ```python
 # Input: "The pizza was absolutely amazing!"
 scores = analyzer.polarity_scores(review)
@@ -278,6 +288,7 @@ scores = analyzer.polarity_scores(review)
 ### 2. Topic Modeling (LDA)
 
 **How it works:**
+
 ```python
 # Input: 100 reviews
 # LDA discovers word clusters (topics)
@@ -297,6 +308,7 @@ Topic 3: [family, kids, friendly, casual, comfortable]
 ### 3. Keyword Extraction (TF-IDF)
 
 **How it works:**
+
 ```python
 # TF-IDF finds important words/phrases
 
@@ -348,17 +360,20 @@ CREATE INDEX idx_restaurant_id ON reviews(restaurant_id);
 ## 🚀 Deployment Considerations
 
 ### Frontend Deployment
+
 - **Vercel**: Easiest option, free tier, auto-deploy from Git
 - **Netlify**: Similar to Vercel, great for static sites
 - **AWS S3 + CloudFront**: Scalable, low-cost static hosting
 
 ### Backend Deployment
+
 - **Heroku**: Easy deployment, free tier available
 - **AWS EC2/ECS**: More control, scalable
 - **Google Cloud Run**: Serverless, auto-scaling
 - **DigitalOcean App Platform**: Simple, affordable
 
 ### Database
+
 - **Heroku Postgres**: Free tier available
 - **AWS RDS**: Fully managed, production-ready
 - **DigitalOcean Managed Databases**: Good balance of features/cost
@@ -366,6 +381,7 @@ CREATE INDEX idx_restaurant_id ON reviews(restaurant_id);
 ## 📈 Future Enhancements
 
 ### Phase 4: Advanced Features
+
 1. **User Accounts & Preferences**
    - Save favorite restaurants
    - Personalized recommendations
@@ -459,4 +475,3 @@ By building VibeFinder, you've learned:
 ---
 
 **You've built something truly impressive. This is portfolio-worthy, interview-ready, and demonstrates real-world skills that companies value. Well done! 🚀**
-

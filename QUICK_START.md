@@ -1,4 +1,4 @@
-# 🚀 VibeFinder Quick Start Guide
+# VibeFinder Quick Start Guide
 
 ## Prerequisites Checklist
 
@@ -39,6 +39,7 @@ python setup_db.py
 ```
 
 **Expected output:**
+
 ```
 ✅ Database connection successful!
 ✅ Created tables: restaurants, reviews, scraping_jobs
@@ -75,6 +76,7 @@ uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 **Expected output:**
+
 ```
 INFO:     Uvicorn running on http://127.0.0.1:8000
 INFO:     Application startup complete.
@@ -89,6 +91,7 @@ celery -A celery_worker worker --loglevel=info
 ```
 
 **Expected output:**
+
 ```
 [INFO/MainProcess] Connected to redis://localhost:6379/0
 [INFO/MainProcess] celery@MacBook ready.
@@ -102,6 +105,7 @@ npm run dev
 ```
 
 **Expected output:**
+
 ```
 VITE ready in 500 ms
 ➜  Local:   http://localhost:5173/
@@ -109,7 +113,7 @@ VITE ready in 500 ms
 
 ---
 
-## Step 5: Test It Out! 🎉
+## Step 5: Test It Out!
 
 1. **Open browser:** http://localhost:5173
 2. **Search for:** "Pizza Boston" or click "📍 Near Me"
@@ -121,28 +125,33 @@ VITE ready in 500 ms
 
 ---
 
-## 🔍 Verify Everything Works
+## Verify Everything Works
 
 ### Check Backend API
+
 ```bash
 curl http://localhost:8000/health
 # Should return: {"status":"healthy","service":"VibeFinder API"}
 ```
 
 ### Check Redis
+
 ```bash
 redis-cli ping
 # Should return: PONG
 ```
 
 ### Check Database
+
 ```bash
 psql vibefinder -c "\dt"
 # Should list: restaurants, reviews, scraping_jobs
 ```
 
 ### Check Celery Worker
+
 Look for this in Terminal 2:
+
 ```
 [INFO/MainProcess] celery@YourComputer ready.
 ```
@@ -152,6 +161,7 @@ Look for this in Terminal 2:
 ## 🐛 Common Issues
 
 ### Issue: "Connection refused" (PostgreSQL)
+
 ```bash
 # Solution:
 brew services restart postgresql@14
@@ -159,12 +169,14 @@ createdb vibefinder
 ```
 
 ### Issue: "Connection refused" (Redis)
+
 ```bash
 # Solution:
 brew services restart redis
 ```
 
 ### Issue: "ModuleNotFoundError"
+
 ```bash
 # Solution:
 cd backend
@@ -173,6 +185,7 @@ pip install -r requirements.txt
 ```
 
 ### Issue: Celery worker not starting
+
 ```bash
 # Check Redis is running:
 redis-cli ping
@@ -182,6 +195,7 @@ brew services restart redis
 ```
 
 ### Issue: No reviews being scraped
+
 ```bash
 # Check Celery worker is running in Terminal 2
 # Check logs in Terminal 2 for errors
@@ -270,11 +284,11 @@ brew services stop redis
 
 You'll know it's working when:
 
-- ✅ All 3 terminals show "running" messages
-- ✅ Frontend loads at http://localhost:5173
-- ✅ Searching "Pizza Boston" returns real restaurants
-- ✅ Restaurant cards show sentiment, vibes, dishes
-- ✅ Terminal 2 (Celery) shows scraping activity
+- All 3 terminals show "running" messages
+- Frontend loads at http://localhost:5173
+- Searching "Pizza Boston" returns real restaurants
+- Restaurant cards show sentiment, vibes, dishes
+- Terminal 2 (Celery) shows scraping activity
 - ✅ Second search for same location is instant (cached!)
 
 ---
@@ -282,15 +296,17 @@ You'll know it's working when:
 ## 🎉 You're Ready!
 
 **System is now:**
-- ✅ Finding real restaurants (Google Places API)
-- ✅ Scraping 100+ reviews per restaurant (Google Maps)
-- ✅ Running ML sentiment analysis (VADER)
-- ✅ Detecting vibes (LDA topic modeling)
-- ✅ Extracting dishes & complaints (TF-IDF)
-- ✅ Caching everything in PostgreSQL
-- ✅ Processing jobs in background (Celery + Redis)
+
+- Finding real restaurants (Google Places API)
+- Scraping 100+ reviews per restaurant (Google Maps)
+- Running ML sentiment analysis (VADER)
+- Detecting vibes (LDA topic modeling)
+- Extracting dishes & complaints (TF-IDF)
+- Caching everything in PostgreSQL
+- Processing jobs in background (Celery + Redis)
 
 **Optional next steps:**
+
 - Add Reddit API for supplementary data
 - Deploy to production (Heroku/AWS)
 - Add more ML models (custom NER for dishes)
@@ -298,17 +314,18 @@ You'll know it's working when:
 
 ---
 
-## 🆘 Need Help?
+## Need Help?
 
 Check the logs:
+
 - **Backend API:** Terminal 1
 - **Celery Worker:** Terminal 2 (most important for scraping)
 - **Frontend:** Terminal 3
 - **Database:** `psql vibefinder` and run SELECT queries
 
 **Most common fix:** Make sure Redis and PostgreSQL are running!
+
 ```bash
 brew services list
 # Both should show "started"
 ```
-
