@@ -4,17 +4,17 @@
 
 ### ✅ **Required Components**
 
-| Component | Purpose | Status | Notes |
-|-----------|---------|--------|-------|
-| **PostgreSQL** | Store scraped reviews | ⚠️ Setup needed | See DATABASE_SETUP_GUIDE.md |
-| **Redis** | Background job queue | ⚠️ Install needed | `brew install redis` |
-| **Google Places API** | Find restaurants | ✅ Already have | Already in .env |
-| **Selenium/Chrome** | Scrape Google Maps | ✅ Auto-install | webdriver-manager handles it |
+| Component             | Purpose               | Status            | Notes                        |
+| --------------------- | --------------------- | ----------------- | ---------------------------- |
+| **PostgreSQL**        | Store scraped reviews | Setup needed      | See DATABASE_SETUP_GUIDE.md  |
+| **Redis**             | Background job queue  | ⚠️ Install needed | `brew install redis`         |
+| **Google Places API** | Find restaurants      | Already have      | Already in .env              |
+| **Selenium/Chrome**   | Scrape Google Maps    | Auto-install      | webdriver-manager handles it |
 
 ### 🔄 **Optional Components**
 
-| Component | Purpose | Status | Notes |
-|-----------|---------|--------|-------|
+| Component      | Purpose               | Status      | Notes                           |
+| -------------- | --------------------- | ----------- | ------------------------------- |
 | **Reddit API** | Supplementary reviews | ⚠️ Optional | Free from reddit.com/prefs/apps |
 
 ---
@@ -38,6 +38,7 @@ python setup_db.py
 ```
 
 **Verify:**
+
 ```bash
 psql vibefinder
 \dt  # Should show: restaurants, reviews, scraping_jobs
@@ -49,11 +50,13 @@ psql vibefinder
 If PostgreSQL is too complex, use SQLite:
 
 **Edit `backend/.env`:**
+
 ```bash
 DATABASE_URL=sqlite:///./vibefinder.db
 ```
 
 **Initialize:**
+
 ```bash
 cd backend
 python setup_db.py
@@ -84,11 +87,13 @@ redis-cli ping
 ### **1. Google Places API** ✅ Already Configured
 
 **What it does:**
+
 - Finds restaurants by location
 - Gets basic info: name, address, rating
 - Gets place_id for scraping
 
 **Status:** ⚠️ Add your API key
+
 ```bash
 GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 ```
@@ -100,6 +105,7 @@ GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 ### **2. Google Maps Scraping** ✅ No API Needed
 
 **What it does:**
+
 - Scrapes 100+ reviews from Google Maps website
 - Uses Selenium (browser automation)
 - Gets full review text, ratings, dates
@@ -109,6 +115,7 @@ GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 **How:** Acts like a browser visiting google.com/maps
 
 **Requirements:**
+
 - Chrome browser (auto-installed)
 - ChromeDriver (auto-installed via webdriver-manager)
 
@@ -117,6 +124,7 @@ GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 ### **3. Reddit API** ⚠️ Optional
 
 **What it does:**
+
 - Searches Reddit for restaurant mentions
 - Adds supplementary sentiment data
 - Fully legal via official API
@@ -134,6 +142,7 @@ GOOGLE_PLACES_API_KEY=your_google_places_api_key_here
 4. Copy credentials
 
 **Add to `backend/.env`:**
+
 ```bash
 REDDIT_CLIENT_ID=your_id_here
 REDDIT_CLIENT_SECRET=your_secret_here
@@ -141,6 +150,7 @@ REDDIT_USER_AGENT=VibeFinder/1.0
 ```
 
 **What happens without Reddit:**
+
 - System still works perfectly
 - Just skips Reddit mentions
 - Logs a warning (not an error)
@@ -154,6 +164,7 @@ REDDIT_USER_AGENT=VibeFinder/1.0
 **Technology:** VADER (Valence Aware Dictionary and sEntiment Reasoner)
 
 **Why VADER:**
+
 - ✅ Perfect for social media & reviews
 - ✅ Understands slang ("awesome!", "meh", "sucks")
 - ✅ Handles emojis and punctuation
@@ -163,6 +174,7 @@ REDDIT_USER_AGENT=VibeFinder/1.0
 **How it works:**
 
 #### **Step 1: Analyze Each Review**
+
 ```python
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -181,6 +193,7 @@ scores = analyzer.polarity_scores(review)
 ```
 
 #### **Step 2: Average All Reviews**
+
 ```python
 # For restaurant with 100 reviews:
 all_scores = [0.87, 0.92, -0.34, 0.76, 0.81, ...]
@@ -189,6 +202,7 @@ average = sum(all_scores) / len(all_scores)
 ```
 
 #### **Step 3: Convert to Percentage**
+
 ```python
 # Convert from [-1, 1] to [0, 100]
 percentage = int((average + 1) / 2 * 100)
@@ -212,12 +226,14 @@ else:
 **Input:** 127 reviews from "Joe's Pizza"
 
 **Sample Reviews:**
+
 - "Best pizza in town! 🍕" → `compound: 0.89`
 - "Pretty good, nice crust" → `compound: 0.65`
 - "Meh, nothing special" → `compound: -0.28`
 - "Amazing sauce!" → `compound: 0.82`
 
 **Process:**
+
 ```
 Average of 127 compound scores: 0.64
 Convert to percentage: (0.64 + 1) / 2 * 100 = 82%
@@ -226,6 +242,7 @@ Result: "82% Positive"
 ```
 
 **Display on UI:**
+
 ```
 ✅ 82% Positive (shown in green)
 ```
@@ -241,6 +258,7 @@ Result: "82% Positive"
 **What it does:** Finds hidden patterns in reviews
 
 **Example:**
+
 ```
 Reviews mention: "loud", "music", "friends", "bar", "group"
 ↓
@@ -250,6 +268,7 @@ Maps to: #Loud, #GoodForGroups
 ```
 
 **How it works:**
+
 ```python
 from sklearn.decomposition import LatentDirichletAllocation
 
@@ -269,6 +288,7 @@ topics = lda.fit_transform(review_text_vectors)
 **What it does:** Finds important words/phrases
 
 **Example - Dishes:**
+
 ```
 Reviews frequently mention:
 - "spicy rigatoni" (mentioned 23 times)
@@ -279,6 +299,7 @@ Extract as: Must-Try Dishes
 ```
 
 **Example - Complaints:**
+
 ```
 Negative sentiment + phrases:
 - "slow service" (mentioned 8 times)
@@ -288,6 +309,7 @@ Extract as: Common Complaints
 ```
 
 **How it works:**
+
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -301,7 +323,7 @@ top_dishes = get_top_n_grams(tfidf_matrix, n=5)
 
 ---
 
-## 🔄 **Complete Data Flow**
+## **Complete Data Flow**
 
 ```
 1. User Searches "Pizza Boston"
@@ -337,7 +359,7 @@ top_dishes = get_top_n_grams(tfidf_matrix, n=5)
 
 ---
 
-## ✅ **Setup Checklist**
+## **Setup Checklist**
 
 ```bash
 # 1. Install PostgreSQL
@@ -376,29 +398,29 @@ psql vibefinder -c "\dt"  # Should show tables
 
 ### **APIs Needed:**
 
-| API | Status | Notes |
-|-----|--------|-------|
-| Google Places | ✅ Already have | For finding restaurants |
-| Google Maps | ✅ No API needed | Scraping with Selenium |
-| Reddit | ⚠️ Optional | Get from reddit.com/prefs/apps |
+| API           | Status        | Notes                          |
+| ------------- | ------------- | ------------------------------ |
+| Google Places | Already have  | For finding restaurants        |
+| Google Maps   | No API needed | Scraping with Selenium         |
+| Reddit        | Optional      | Get from reddit.com/prefs/apps |
 
 ### **Infrastructure Needed:**
 
-| Component | Status | Command |
-|-----------|--------|---------|
-| PostgreSQL | ⚠️ Setup | `brew install postgresql@14` |
-| Redis | ⚠️ Setup | `brew install redis` |
+| Component  | Status | Command                      |
+| ---------- | ------ | ---------------------------- |
+| PostgreSQL | Setup  | `brew install postgresql@14` |
+| Redis      | Setup  | `brew install redis`         |
 
 ### **Sentiment Analysis:**
 
-- ✅ **VADER** - Pre-built, no API needed
-- ✅ **LDA** - Built into scikit-learn
-- ✅ **TF-IDF** - Built into scikit-learn
-- ✅ All models work offline after pip install
+- **VADER** - Pre-built, no API needed
+- **LDA** - Built into scikit-learn
+- **TF-IDF** - Built into scikit-learn
+- All models work offline after pip install
 
 ---
 
-## 🚀 **Quick Start Commands**
+## **Quick Start Commands**
 
 ```bash
 # Install everything
@@ -417,6 +439,3 @@ python setup_db.py
 # Terminal 2: celery -A celery_worker worker --loglevel=info
 # Terminal 3: cd ../frontend && npm run dev
 ```
-
-**That's it! No additional APIs or licenses needed!** 🎉
-
