@@ -132,7 +132,7 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 🔄 Data Flow on Second Search
+## Data Flow on Second Search
 
 ```
 User searches "Pizza Boston" again
@@ -146,7 +146,7 @@ Run ML on cached reviews (instant!)
 Return full insights in <100ms
 ```
 
-## 🧠 ML Pipeline Detail
+## ML Pipeline Detail
 
 ```
 100 Reviews from Google Maps
@@ -188,34 +188,34 @@ Final Result:
 }
 ```
 
-## 🔑 No APIs Needed (Mostly)
+## No APIs Needed (Mostly)
 
 ```
-✅ Google Places API
+ Google Places API
    └─ Purpose: Find restaurants
    └─ Get your key: https://console.cloud.google.com/apis/credentials
 
-✅ Google Maps Scraping
+ Google Maps Scraping
    └─ Purpose: Get 100+ reviews
    └─ Method: Selenium (no API)
    └─ Status: Ready to use
 
-⚠️  Reddit API (Optional)
+  Reddit API (Optional)
    └─ Purpose: Supplementary mentions
    └─ Status: Not configured (app works without it)
 
-✅ VADER Sentiment
+ VADER Sentiment
    └─ Purpose: ML analysis
    └─ Method: Pre-built model (pip install)
    └─ Status: Ready to use
 
-✅ LDA & TF-IDF
+LDA & TF-IDF
    └─ Purpose: Topic modeling, keywords
    └─ Method: scikit-learn (pip install)
    └─ Status: Ready to use
 ```
 
-## 🎯 What You Need to Install
+## What You Need to Install
 
 ```bash
 # Infrastructure
@@ -233,7 +233,7 @@ brew install postgresql@14 redis
 npm install
 ```
 
-## 🚀 Start Commands
+## Start Commands
 
 ```bash
 # Terminal 1: Backend API
@@ -246,9 +246,10 @@ celery -A celery_worker worker --loglevel=info
 npm run dev
 ```
 
-## ✅ You're Ready!
+## You're Ready!
 
 Everything is set up. Just need to:
+
 1. Install PostgreSQL & Redis
 2. Run setup_db.py
 3. Start the 3 processes
