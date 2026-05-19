@@ -119,71 +119,44 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       {/* Header - DYNAMIC BACKGROUND IMAGES */}
-      <header className="bg-gradient-to-br from-slate-900/50 via-slate-800/40 to-slate-950/50 backdrop-blur-2xl shadow-2xl relative overflow-hidden border-b border-white/10">
-        {/* Dynamic Hero Background Images - ROTATING */}
-        <div 
-          className="absolute inset-0 opacity-60 transition-opacity ease-in-out"
-          style={{
-            backgroundImage: `url(${backgroundImages[currentBgImage]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            filter: 'brightness(0.85) contrast(1.15) saturate(1.1)',
-            transitionDuration: '2s'
-          }}
-        ></div>
-        {/* Better overlay - subtle dark with warm tones */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/45 via-slate-900/30 to-slate-950/45"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/10 via-transparent to-purple-950/10"></div>
-        
-        {/* Silver glass animated glows */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-white rounded-full blur-3xl animate-pulse-slow"></div>
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-slate-300 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '1.5s'}}></div>
-          <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-white/40 rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '0.8s'}}></div>
+      <header className="relative overflow-hidden border-b border-white/10 bg-slate-950">
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-40"
+            style={{ backgroundImage: `url(${backgroundImages[currentBgImage]})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-950/80 to-slate-950/95" />
         </div>
-        
-        {/* Silver glass texture overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent"></div>
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)',
-          backgroundSize: '50px 50px'
-        }}></div>
-        
-        <div className="max-w-7xl mx-auto px-6 py-12 sm:px-8 lg:px-12 relative z-10">
-          {/* Logo in top left - WITH FLAMES */}
-          <div className="absolute top-6 left-6 sm:left-8">
+
+        <div className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between mb-10">
             <Logo />
+            <div className="rounded-full border border-white/10 bg-slate-900/70 px-4 py-2 text-sm text-slate-400">
+              AI-powered review and vibe analysis
+            </div>
           </div>
 
-          {/* Main Content - ELEGANT & CREATIVE */}
-          <div className="text-center pt-24 sm:pt-20 pb-12 relative z-20">
-            {/* Animated Title - DARKER & MORE VISIBLE */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-6 tracking-tight leading-tight">
-              <span className="inline-block text-white animate-slide-up drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]" style={{textShadow: '0 4px 20px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.4)'}}>
-                Know Before You Go
-              </span>
-              <br />
-              <span className="inline-block text-slate-100 animate-slide-up mt-2 drop-shadow-[0_4px_15px_rgba(0,0,0,0.7)]" style={{animationDelay: '0.2s', textShadow: '0 4px 15px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5)'}}>
-                Every Restaurant's True Vibe
-              </span>
+          <div className="max-w-3xl">
+            <p className="text-sm uppercase tracking-[0.24em] text-cyan-300/80 mb-4">Discover restaurant insights</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+              Know restaurant vibe and sentiment before you go.
             </h1>
-            
-            {/* Strategic Subtitle - ENHANCED CONTRAST CARDS */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mt-8 animate-fade-in max-w-5xl mx-auto">
-              <div className="px-5 py-2.5 bg-white/15 backdrop-blur-xl rounded-xl border border-white/30 shadow-xl hover:bg-white/20 transition-all">
-                <span className="text-white text-base sm:text-lg font-black drop-shadow-lg">Real sentiment from thousands of reviews</span>
+            <p className="mt-6 text-lg leading-8 text-slate-300">
+              Analyze real reviews with AI to uncover true sentiment, atmosphere, must-try dishes, and common complaints in one clean, easy-to-use app.
+            </p>
+
+            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-3xl border border-white/10 bg-slate-900/85 px-5 py-6 shadow-soft">
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Sentiment</p>
+                <p className="mt-3 text-white font-semibold text-lg">Real review analysis</p>
               </div>
-              <span className="text-white/60 text-xl font-bold">•</span>
-              <div className="px-5 py-2.5 bg-white/15 backdrop-blur-xl rounded-xl border border-white/30 shadow-xl hover:bg-white/20 transition-all">
-                <span className="text-white text-base sm:text-lg font-black drop-shadow-lg">Must-try dishes</span>
+              <div className="rounded-3xl border border-white/10 bg-slate-900/85 px-5 py-6 shadow-soft">
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Vibe</p>
+                <p className="mt-3 text-white font-semibold text-lg">Ambiance tags from reviews</p>
               </div>
-              <span className="text-white/60 text-xl font-bold">•</span>
-              <div className="px-5 py-2.5 bg-white/15 backdrop-blur-xl rounded-xl border border-white/30 shadow-xl hover:bg-white/20 transition-all">
-                <span className="text-white text-base sm:text-lg font-black drop-shadow-lg">Common complaints</span>
-              </div>
-              <div className="px-5 py-2.5 bg-gradient-to-r from-emerald-400/50 to-teal-400/50 backdrop-blur-xl rounded-xl border border-emerald-300/60 shadow-xl hover:from-emerald-400/60 hover:to-teal-400/60 transition-all">
-                <span className="text-white text-base sm:text-lg font-black drop-shadow-lg">Check before your reservation</span>
+              <div className="rounded-3xl border border-white/10 bg-slate-900/85 px-5 py-6 shadow-soft">
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Recommendations</p>
+                <p className="mt-3 text-white font-semibold text-lg">Must-try dishes and issues</p>
               </div>
             </div>
           </div>
@@ -323,110 +296,15 @@ function App() {
         )}
       </main>
 
-      {/* Footer - SILVER GLASS THEME */}
-      <footer className="mt-24 bg-slate-900/40 backdrop-blur-2xl border-t border-white/10 relative overflow-hidden">
-        {/* Silver glow effects */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute top-0 right-0 w-80 h-80 bg-slate-300 rounded-full blur-3xl"></div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 relative z-10">
-          {/* Main Footer Content */}
-          <div className="grid md:grid-cols-3 gap-10 mb-12">
-            {/* About Section */}
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-4 mb-6">
-                <div className="bg-slate-800/50 backdrop-blur-xl p-3 rounded-2xl border border-white/20 shadow-xl">
-                  <span className="text-2xl font-black text-white">KB</span>
-                </div>
-                <div>
-                  <h3 className="text-white font-black text-2xl">Know Before You Go</h3>
-                  <p className="text-slate-300 text-sm font-bold">Smart Dining Decisions</p>
-                </div>
-              </div>
-              <p className="text-slate-200 text-base leading-relaxed mb-4 font-medium">
-                We analyze <span className="text-emerald-400 font-black">thousands of restaurant reviews</span> using advanced 
-                <span className="text-slate-300 font-black"> Natural Language Processing (NLP)</span> and 
-                <span className="text-emerald-400 font-black"> Machine Learning</span> to reveal the true vibe, sentiment, 
-                and must-know insights about any restaurant—before you make a reservation.
-              </p>
-              <p className="text-slate-300 text-sm font-semibold">
-                Stop wasting time reading hundreds of reviews. Let AI do it for you in seconds.
-              </p>
-            </div>
-
-            {/* Quick Stats - SILVER GLASS */}
-            <div className="bg-slate-800/30 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
-              {/* Silver shine */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5"></div>
-              <div className="relative z-10">
-                <h4 className="text-white font-black text-xl mb-6">Platform Stats</h4>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-4xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">100K+</p>
-                    <p className="text-slate-300 text-sm font-bold mt-1">Reviews Analyzed</p>
-                  </div>
-                  <div>
-                    <p className="text-4xl font-black bg-gradient-to-r from-slate-400 to-slate-500 bg-clip-text text-transparent">10K+</p>
-                    <p className="text-slate-300 text-sm font-bold mt-1">Restaurants Covered</p>
-                  </div>
-                  <div>
-                    <p className="text-4xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">89%</p>
-                    <p className="text-slate-300 text-sm font-bold mt-1">Sentiment Accuracy</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* AI-Powered Insights - PROFESSIONAL */}
-          <div className="border-t border-white/10 pt-8 mb-8">
-            <h4 className="text-white font-black text-lg mb-6 flex items-center gap-2">
-              <span className="text-xl">🤖</span>
-              <span>AI-Guided Insights</span>
-            </h4>
-            <p className="text-slate-300 text-sm mb-6 font-medium leading-relaxed max-w-4xl">
-              Our advanced AI analyzes thousands of reviews to guide you to the best dining decisions. 
-              Using <span className="text-emerald-400 font-bold">sentiment analysis</span>, 
-              <span className="text-emerald-400 font-bold"> topic modeling</span>, and 
-              <span className="text-emerald-400 font-bold"> natural language processing</span>, 
-              we extract the most valuable insights—so you don't have to read hundreds of reviews.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="bg-slate-800/40 backdrop-blur-xl px-5 py-4 rounded-xl border border-white/10 shadow-lg hover:border-emerald-400/30 hover:bg-slate-800/50 transition-all">
-                <p className="text-emerald-400 font-black text-xs mb-1">DATA SOURCE</p>
-                <p className="text-white font-bold text-sm">Google Places</p>
-              </div>
-              <div className="bg-slate-800/40 backdrop-blur-xl px-5 py-4 rounded-xl border border-white/10 shadow-lg hover:border-emerald-400/30 hover:bg-slate-800/50 transition-all">
-                <p className="text-emerald-400 font-black text-xs mb-1">SENTIMENT</p>
-                <p className="text-white font-bold text-sm">VADER Analysis</p>
-              </div>
-              <div className="bg-slate-800/40 backdrop-blur-xl px-5 py-4 rounded-xl border border-white/10 shadow-lg hover:border-emerald-400/30 hover:bg-slate-800/50 transition-all">
-                <p className="text-emerald-400 font-black text-xs mb-1">TOPICS</p>
-                <p className="text-white font-bold text-sm">LDA Modeling</p>
-              </div>
-              <div className="bg-slate-800/40 backdrop-blur-xl px-5 py-4 rounded-xl border border-white/10 shadow-lg hover:border-emerald-400/30 hover:bg-slate-800/50 transition-all">
-                <p className="text-emerald-400 font-black text-xs mb-1">EXTRACTION</p>
-                <p className="text-white font-bold text-sm">TF-IDF Keywords</p>
-              </div>
-              <div className="bg-slate-800/40 backdrop-blur-xl px-5 py-4 rounded-xl border border-white/10 shadow-lg hover:border-emerald-400/30 hover:bg-slate-800/50 transition-all">
-                <p className="text-emerald-400 font-black text-xs mb-1">PIPELINE</p>
-                <p className="text-white font-bold text-sm">Python ML</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="border-t border-white/10 pt-8 text-center">
-            <p className="text-slate-300 text-sm font-bold">
-              © {new Date().getFullYear()} Know Before You Go • Powered by AI & Machine Learning
-            </p>
-            <p className="text-slate-400 text-xs mt-2 font-semibold">
-              Let AI guide you to the best dining experiences
+      <footer className="mt-24 border-t border-slate-800/70 bg-slate-950/95">
+        <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8 lg:px-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm text-slate-400 font-semibold">Know Before You Go</p>
+            <p className="mt-3 max-w-xl text-slate-500 text-sm leading-relaxed">
+              AI-powered restaurant insights for more confident decisions. Built with React, Tailwind CSS, and a Python backend.
             </p>
           </div>
+          <p className="text-slate-500 text-sm">Clean UI · Fast searches · Real review analysis</p>
         </div>
       </footer>
     </div>
