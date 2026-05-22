@@ -3,14 +3,17 @@ import { useState } from 'react';
 function SearchBar({ onSearch, isLoading }) {
   const [location, setLocation] = useState('');
   const [isGettingLocation, setIsGettingLocation] = useState(false);
+  const [geoError, setGeoError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setGeoError(null);
     onSearch(location);
   };
 
   const handleUseMyLocation = () => {
     setIsGettingLocation(true);
+    setGeoError(null);
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -21,14 +24,13 @@ function SearchBar({ onSearch, isLoading }) {
           onSearch(locationString, { lat: latitude, lng: longitude });
           setIsGettingLocation(false);
         },
-        (error) => {
-          console.error('Error getting location:', error);
-          alert('Unable to get your location. Please enter it manually.');
+        () => {
+          setGeoError('Unable to get your location. Please enter it manually.');
           setIsGettingLocation(false);
         }
       );
     } else {
-      alert('Geolocation is not supported by your browser');
+      setGeoError('Geolocation is not supported by your browser.');
       setIsGettingLocation(false);
     }
   };
@@ -43,10 +45,9 @@ function SearchBar({ onSearch, isLoading }) {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Search by location or restaurant name..."
-              className="w-full rounded-3xl border border-slate-700 bg-slate-900/90 px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/10 outline-none transition duration-300"
+              className="w-full rounded-3xl border border-slate-700 bg-black/90 px-6 py-4 text-lg text-white placeholder:text-slate-500 focus:border-amber-300 focus:ring-0 outline-none transition duration-300"
               disabled={isLoading || isGettingLocation}
             />
-            <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl">🔍</span>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
@@ -54,48 +55,52 @@ function SearchBar({ onSearch, isLoading }) {
               type="button"
               onClick={handleUseMyLocation}
               disabled={isLoading || isGettingLocation}
-              className="rounded-3xl border border-slate-700 bg-slate-800 px-5 py-4 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-3xl border border-slate-700 bg-slate-900 px-5 py-4 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isGettingLocation ? 'Locating…' : 'Near Me'}
             </button>
             <button
               type="submit"
               disabled={isLoading || isGettingLocation}
-              className="rounded-3xl bg-cyan-500 px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-3xl bg-amber-400 px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? 'Searching…' : 'Search'}
             </button>
           </div>
         </div>
 
+        {geoError && (
+          <p className="mt-3 text-sm text-red-400 text-center animate-fade-in">{geoError}</p>
+        )}
+
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-400">
           <span className="font-semibold text-slate-300">Try:</span>
           <button
             type="button"
             onClick={() => onSearch('The Cheesecake Factory')}
-            className="rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+            className="rounded-full border border-slate-700 bg-black/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
           >
             The Cheesecake Factory
           </button>
           <button
             type="button"
-            onClick={() => onSearch('Pizza Boston')}
-            className="rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+            onClick={() => onSearch('Italian in Brooklyn')}
+            className="rounded-full border border-slate-700 bg-black/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
           >
-            Pizza Boston
+            Italian in Brooklyn
           </button>
           <button
             type="button"
-            onClick={() => onSearch('Sushi near me')}
-            className="rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+            onClick={() => onSearch('Sushi downtown Boston')}
+            className="rounded-full border border-slate-700 bg-black/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
           >
-            Sushi near me
+            Sushi downtown Boston
           </button>
           <span className="text-slate-500">or</span>
           <button
             type="button"
             onClick={handleUseMyLocation}
-            className="rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
+            className="rounded-full border border-slate-700 bg-black/80 px-4 py-2 text-slate-200 transition hover:border-slate-500 hover:bg-slate-900"
           >
             Near Me
           </button>
