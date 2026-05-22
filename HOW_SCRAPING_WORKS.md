@@ -78,17 +78,17 @@ Return full ML insights in <200ms
 
 ### Required Components ✅
 
-1. **✅ PostgreSQL** - Stores scraped reviews
+1. ** PostgreSQL** - Stores scraped reviews
 
    - Tables: `restaurants`, `reviews`, `scraping_jobs`
    - Status: **Installed and running!**
 
-2. **✅ Redis** - Task queue for background jobs
+2. ** Redis** - Task queue for background jobs
 
    - Celery uses Redis to queue scraping tasks
    - Status: **Already running!**
 
-3. **✅ Python Dependencies** - All scraping libraries
+3. ** Python Dependencies** - All scraping libraries
 
    - `selenium` - Browser automation
    - `webdriver-manager` - Auto-installs ChromeDriver
@@ -96,7 +96,7 @@ Return full ML insights in <200ms
    - `nltk`, `vaderSentiment`, `scikit-learn` - ML analysis
    - Status: **All installed!**
 
-4. **✅ Chrome Browser** - For Selenium
+4. ** Chrome Browser** - For Selenium
 
    - Selenium opens Chrome to visit Google Maps
    - ChromeDriver auto-downloads on first run
@@ -181,7 +181,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing the Flow
+##  Testing the Flow
 
 ### First Search (Cold Cache)
 
@@ -414,31 +414,12 @@ celery -A celery_worker worker --loglevel=info
 
 ---
 
-## 🎉 Summary
+##  Summary
 
-**What you have now:**
+- PostgreSQL running and initialized
+- Redis running
+- All Python dependencies installed
+- Database tables created
+- Backend API ready
+- Frontend ready
 
-- ✅ PostgreSQL running and initialized
-- ✅ Redis running
-- ✅ All Python dependencies installed
-- ✅ Database tables created
-- ✅ Backend API ready
-- ✅ Frontend ready
-
-**What you need to do:**
-
-1. Start Backend (Terminal 1)
-2. **Start Celery Worker (Terminal 2) - CRITICAL!**
-3. Start Frontend (Terminal 3)
-4. Search and watch the magic happen!
-
-**The scraping will work correctly because:**
-
-- Reviews are cached in PostgreSQL (no redundant scraping)
-- Background jobs run asynchronously (no blocking)
-- ML runs on scraped data (accurate insights)
-- Future searches are instant (cache hit!)
-
----
-
-Ready to start? Run the 3 commands above and test it out! 🚀

@@ -1,8 +1,8 @@
-# 🎨 VibeFinder - Visual Guide
+# Know Before You Go - Visual Guide
 
-## 🖼️ What Your Application Looks Like
+##  What Your Application Looks Like
 
-### 🏠 Home Page (Before Search)
+###  Home Page (Before Search)
 
 ```
 ╔════════════════════════════════════════════════════════════════════╗
@@ -61,7 +61,7 @@
 ║  │  ▸ Garlic Knots            │  │  ▸ Lobster Risotto         │ ║
 ║  │  ▸ Margherita Pizza        │  │  ▸ Chocolate Soufflé       │ ║
 ║  │                             │  │                             │ ║
-║  │ ⚠️ Heads Up                │  │ ⚠️ Heads Up                │ ║
+║  │  Heads Up                │  │  Heads Up                │ ║
 ║  │  • Slow service weekends   │  │  • Pricey                  │ ║
 ║  │  • Can get very crowded    │  │  • Limited parking         │ ║
 ║  │                             │  │                             │ ║
@@ -96,27 +96,27 @@
 ╚════════════════════════════════════════════════════════════════════╝
 ```
 
-## 🎨 Color Scheme
+##  Color Scheme
 
 ### Primary Colors
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║  🟦 Primary Dark (#0F172A)                                  ║
+║   Primary Dark (#0F172A)                                  ║
 ║  ├─ Main background                                         ║
 ║  └─ Deep navy blue, easy on eyes                           ║
 ║                                                              ║
-║  🔵 Primary Blue (#1E40AF)                                  ║
+║   Primary Blue (#1E40AF)                                  ║
 ║  ├─ Interactive elements                                    ║
 ║  ├─ Buttons, cards                                          ║
 ║  └─ Medium blue, professional                               ║
 ║                                                              ║
-║  💙 Primary Light (#3B82F6)                                 ║
+║  Primary Light (#3B82F6)                                 ║
 ║  ├─ Accents, hover states                                   ║
 ║  └─ Light blue, modern                                      ║
 ║                                                              ║
-║  🟧 Accent Orange (#F97316)                                 ║
+║   Accent Orange (#F97316)                                 ║
 ║  ├─ Call-to-action (Search button)                          ║
 ║  ├─ Important elements                                      ║
 ║  └─ Vibrant, attention-grabbing                             ║
@@ -137,19 +137,19 @@
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║  ✅ Positive (80%+) → Green (#4ADE80)                       ║
+║   Positive (80%+) → Green (#4ADE80)                       ║
 ║     ┌─────────────────────────────┐                        ║
 ║     │ True Sentiment: 91%         │                        ║
 ║     │   Very Positive ✓           │                        ║
 ║     └─────────────────────────────┘                        ║
 ║                                                              ║
-║  ⚠️ Neutral (60-79%) → Yellow (#FACC15)                    ║
+║   Neutral (60-79%) → Yellow (#FACC15)                    ║
 ║     ┌─────────────────────────────┐                        ║
 ║     │ True Sentiment: 72%         │                        ║
 ║     │      Positive               │                        ║
 ║     └─────────────────────────────┘                        ║
 ║                                                              ║
-║  ❌ Negative (<60%) → Orange (#F97316)                     ║
+║   Negative (<60%) → Orange (#F97316)                     ║
 ║     ┌─────────────────────────────┐                        ║
 ║     │ True Sentiment: 45%         │                        ║
 ║     │      Neutral                │                        ║
@@ -290,7 +290,7 @@ Results appear:
 │  ▸ Dish 2                                 │
 │  ▸ Dish 3                                 │
 │                                           │
-│ ⚠️ Heads Up                              │ ← Section 3
+│  Heads Up                              │ ← Section 3
 │  • Complaint 1                            │   (Warning style)
 │  • Complaint 2                            │
 │                                           │
@@ -305,7 +305,7 @@ Results appear:
 Typography Scale:
 
 ┌─────────────────────────────────────────┐
-│  🍽️ VibeFinder                         │ ← 4xl (36px) Bold
+│  VibeFinder                         │ ← 4xl (36px) Bold
 │     Subtitle text                       │ ← lg (18px) Normal
 └─────────────────────────────────────────┘
 
