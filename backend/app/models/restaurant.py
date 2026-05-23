@@ -16,6 +16,9 @@ class RestaurantResponse(BaseModel):
     rating: float = Field(..., ge=0, le=5, description="Google rating (0-5)")
     trueSentiment: str = Field(..., description="AI-calculated sentiment (e.g., '82% Positive')")
     vibeCheck: List[str] = Field(..., description="AI-detected vibe tags (e.g., ['#Loud', '#GoodForGroups'])")
+    vibeDescription: Optional[str] = Field(None, description="Natural language vibe sentence")
+    bestFor: List[str] = Field(default_factory=list, description="Situation chips — when to go (e.g., ['Date Night', 'Groups 4+'])")
+    skipIf: List[str] = Field(default_factory=list, description="Situation chips — when to skip (e.g., ['Quiet Conversation'])")
     mustTryDishes: List[str] = Field(..., description="Top dishes extracted from reviews")
     commonComplaints: List[str] = Field(..., description="Common negative points from reviews")
     address: Optional[str] = Field(None, description="Restaurant address")
@@ -24,6 +27,9 @@ class RestaurantResponse(BaseModel):
     lat: Optional[float] = Field(None, description="Latitude")
     lng: Optional[float] = Field(None, description="Longitude")
     photo_url: Optional[str] = Field(None, description="URL of the restaurant's primary photo")
+    photos: List[str] = Field(default_factory=list, description="Up to 5 photo URLs for gallery")
+    website: Optional[str] = Field(None, description="Restaurant website URL")
+    neighborhoodNote: Optional[str] = Field(None, description="Brief area character note from Claude")
 
     class Config:
         json_schema_extra = {

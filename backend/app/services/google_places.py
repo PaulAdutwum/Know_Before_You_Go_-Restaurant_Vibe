@@ -78,25 +78,27 @@ class GooglePlacesService:
                 # Get more details about the place
                 place_details = self.client.place(
                     place_id=place['place_id'],
-                    fields=['name', 'rating', 'formatted_address', 'place_id', 'user_ratings_total', 'photo']
+                    fields=['name', 'rating', 'formatted_address', 'place_id', 'user_ratings_total', 'photo', 'website']
                 )
-                
+
                 details = place_details.get('result', {})
-                
+
                 # Get coordinates
                 geometry = place.get('geometry', {})
                 location_coords = geometry.get('location', {})
-                
-                # Get photo URL if available
+
+                # Build up to 5 photo URLs from photo references
                 photo_url = None
-                photos = details.get('photos', [])
-                if photos and len(photos) > 0:
-                    # Get the first photo reference
-                    photo_reference = photos[0].get('photo_reference')
-                    if photo_reference:
-                        # Construct photo URL (maxwidth 800 for good quality)
-                        photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={photo_reference}&key={self.api_key}"
-                
+                photo_urls = []
+                raw_photos = details.get('photos', [])
+                for p in raw_photos[:5]:
+                    ref = p.get('photo_reference')
+                    if ref:
+                        url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={ref}&key={self.api_key}"
+                        photo_urls.append(url)
+                if photo_urls:
+                    photo_url = photo_urls[0]
+
                 restaurant = {
                     'name': details.get('name', 'Unknown'),
                     'rating': details.get('rating', 0.0),
@@ -105,7 +107,9 @@ class GooglePlacesService:
                     'total_ratings': details.get('user_ratings_total', 0),
                     'lat': location_coords.get('lat'),
                     'lng': location_coords.get('lng'),
-                    'photo_url': photo_url
+                    'photo_url': photo_url,
+                    'photos': photo_urls,
+                    'website': details.get('website'),
                 }
                 
                 restaurants.append(restaurant)
@@ -155,23 +159,27 @@ class GooglePlacesService:
                 try:
                     place_details = self.client.place(
                         place_id=place['place_id'],
-                        fields=['name', 'rating', 'formatted_address', 'place_id', 'user_ratings_total', 'geometry', 'photo']
+                        fields=['name', 'rating', 'formatted_address', 'place_id', 'user_ratings_total', 'geometry', 'photo', 'website']
                     )
-                    
+
                     details = place_details.get('result', {})
-                    
+
                     # Get coordinates
                     geometry = details.get('geometry', {})
                     location_coords = geometry.get('location', {})
-                    
-                    # Get photo URL if available
+
+                    # Build up to 5 photo URLs from photo references
                     photo_url = None
-                    photos = details.get('photos', [])
-                    if photos and len(photos) > 0:
-                        photo_reference = photos[0].get('photo_reference')
-                        if photo_reference:
-                            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={photo_reference}&key={self.api_key}"
-                    
+                    photo_urls = []
+                    raw_photos = details.get('photos', [])
+                    for p in raw_photos[:5]:
+                        ref = p.get('photo_reference')
+                        if ref:
+                            url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference={ref}&key={self.api_key}"
+                            photo_urls.append(url)
+                    if photo_urls:
+                        photo_url = photo_urls[0]
+
                     restaurant = {
                         'name': details.get('name', 'Unknown'),
                         'rating': details.get('rating', 0.0),
@@ -180,7 +188,9 @@ class GooglePlacesService:
                         'total_ratings': details.get('user_ratings_total', 0),
                         'lat': location_coords.get('lat'),
                         'lng': location_coords.get('lng'),
-                        'photo_url': photo_url
+                        'photo_url': photo_url,
+                        'photos': photo_urls,
+                        'website': details.get('website'),
                     }
                     
                     restaurants.append(restaurant)

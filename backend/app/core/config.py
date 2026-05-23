@@ -38,6 +38,9 @@ class Settings(BaseSettings):
     
     # Google Places API
     GOOGLE_PLACES_API_KEY: str = ""
+
+    # OpenAI API
+    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     
     # Scraping Configuration
     SCRAPING_ENABLED: bool = os.getenv("SCRAPING_ENABLED", "true").lower() == "true"
