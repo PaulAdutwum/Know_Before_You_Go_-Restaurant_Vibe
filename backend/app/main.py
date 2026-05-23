@@ -41,9 +41,6 @@ app.add_middleware(
 # Include routers
 app.include_router(search.router, prefix=settings.API_V1_PREFIX, tags=["search"])
 
-# Import scraping router
-from app.api import scraping
-app.include_router(scraping.router, prefix=f"{settings.API_V1_PREFIX}/scraping", tags=["scraping"])
 
 
 @app.get("/")

@@ -74,22 +74,17 @@ Return full ML insights in <200ms
 
 ---
 
-## 🎯 What Makes Scraping Work Correctly
-
-### Required Components ✅
+### Required Components
 
 1. ** PostgreSQL** - Stores scraped reviews
-
    - Tables: `restaurants`, `reviews`, `scraping_jobs`
    - Status: **Installed and running!**
 
 2. ** Redis** - Task queue for background jobs
-
    - Celery uses Redis to queue scraping tasks
    - Status: **Already running!**
 
 3. ** Python Dependencies** - All scraping libraries
-
    - `selenium` - Browser automation
    - `webdriver-manager` - Auto-installs ChromeDriver
    - `celery` - Background job processing
@@ -97,7 +92,6 @@ Return full ML insights in <200ms
    - Status: **All installed!**
 
 4. ** Chrome Browser** - For Selenium
-
    - Selenium opens Chrome to visit Google Maps
    - ChromeDriver auto-downloads on first run
    - Status: **Will auto-install!**
@@ -181,7 +175,7 @@ npm run dev
 
 ---
 
-##  Testing the Flow
+## Testing the Flow
 
 ### First Search (Cold Cache)
 
@@ -208,7 +202,7 @@ npm run dev
 
 ---
 
-## 🎛️ Filtering & Quality Control
+## Filtering & Quality Control
 
 ### How We Filter for Quality Reviews
 
@@ -298,7 +292,7 @@ def run_topic_modeling(reviews):
 
 ---
 
-## 🔧 Configuration Options
+## Configuration Options
 
 ### In `backend/.env`:
 
@@ -319,7 +313,7 @@ TOP_DISHES_COUNT=5                # Number of dishes to show
 
 ---
 
-## 🐛 Troubleshooting Scraping Issues
+## Troubleshooting Scraping Issues
 
 ### Issue: "No scraping activity in Terminal 2"
 
@@ -379,7 +373,7 @@ celery -A celery_worker worker --loglevel=info
 
 ---
 
-## ✅ Success Indicators
+## Success Indicators
 
 ### You'll know scraping is working when:
 
@@ -402,7 +396,6 @@ celery -A celery_worker worker --loglevel=info
    ```
 
 3. **Second search is instant:**
-
    - First search: 2-3 seconds
    - Second search: <500ms (cached!)
 
@@ -414,7 +407,7 @@ celery -A celery_worker worker --loglevel=info
 
 ---
 
-##  Summary
+## Summary
 
 - PostgreSQL running and initialized
 - Redis running
@@ -422,4 +415,3 @@ celery -A celery_worker worker --loglevel=info
 - Database tables created
 - Backend API ready
 - Frontend ready
-

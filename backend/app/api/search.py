@@ -1,90 +1,66 @@
 """
 Search API Endpoint
 
-Main endpoint for restaurant search with AI-powered insights.
-This orchestrates the entire pipeline:
-1. Google Places API search
-2. Review scraping
-3. ML analysis (sentiment, topics, keywords)
-4. Response assembly
+Pipeline:
+1. Google Places API — find restaurants, get reviews, photos, website, address
+2. Claude API — analyze reviews in parallel for all restaurants at once
+3. Return merged result: Google data + Claude insights
 """
 
+import asyncio
+import logging
 from fastapi import APIRouter, HTTPException, Query
 from typing import List
-import logging
+from math import radians, cos, sin, asin, sqrt
 
 from app.models.restaurant import RestaurantResponse
 from app.services.google_places import GooglePlacesService
 from app.services.review_scraper import ReviewScraper
-from app.ml.sentiment_analyzer import SentimentAnalyzer
-from app.ml.topic_modeler import TopicModeler
-from app.ml.keyword_extractor import KeywordExtractor
-from app.services.ml_generator import generate_ml_insights, calculate_distance
+from app.services.claude_analyzer import analyze_restaurant
 
-# Initialize router
 router = APIRouter()
-
-# Initialize services (these will be implemented in the services module)
 google_places = GooglePlacesService()
 review_scraper = ReviewScraper()
-sentiment_analyzer = SentimentAnalyzer()
-topic_modeler = TopicModeler()
-keyword_extractor = KeywordExtractor()
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> str:
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    distance_miles = 2 * asin(sqrt(a)) * 3956
+    if distance_miles < 0.1:
+        return f"{int(distance_miles * 5280)} ft"
+    elif distance_miles < 10:
+        return f"{distance_miles:.1f} mi"
+    return f"{int(distance_miles)} mi"
+
+
 def detect_restaurant_name_query(query: str) -> bool:
-    """
-    Intelligently detect if a query is a restaurant name or a location search.
-    
-    Restaurant name indicators:
-    - Contains possessive ('s)
-    - Starts with "The", "Papa", "Mama", etc.
-    - Contains common restaurant words like "restaurant", "cafe", "bistro"
-    - Is capitalized (Title Case)
-    - Doesn't contain location indicators
-    
-    Location search indicators:
-    - Contains "pizza", "sushi", "burger" + location
-    - Contains "in", "near", "at"
-    - Contains city/state names
-    
-    Args:
-        query: The search query string
-        
-    Returns:
-        True if likely a restaurant name, False if likely a location search
-    """
     query_lower = query.lower().strip()
     query_words = query_lower.split()
-    
-    # Strong restaurant name indicators
+
     restaurant_indicators = [
-        "'s " in query_lower,  # Joe's Pizza, Papa's Kitchen
-        query.startswith("The "),  # The Cheesecake Factory
+        "'s " in query_lower,
+        query.startswith("The "),
         query.startswith("Papa "),
         query.startswith("Mama "),
-        query.startswith("Uncle "),
         "restaurant" in query_lower,
         "cafe" in query_lower,
         "bistro" in query_lower,
         "kitchen" in query_lower,
         "grill" in query_lower,
         "tavern" in query_lower,
-        "bar" in query_lower and "bar" not in ["bar", "bars"],  # "Sushi Bar" but not just "bar"
-        "house" in query_lower and len(query_words) > 1,  # "Steak House"
+        "house" in query_lower and len(query_words) > 1,
         "inn" in query_lower,
         "diner" in query_lower,
-        "eatery" in query_lower,
         "pizzeria" in query_lower,
         "trattoria" in query_lower,
         "steakhouse" in query_lower,
     ]
-    
-    # Location search indicators
     location_indicators = [
         " in " in query_lower,
         " near " in query_lower,
@@ -101,245 +77,112 @@ def detect_restaurant_name_query(query: str) -> bool:
         query_lower.startswith("japanese "),
         query_lower.startswith("coffee "),
     ]
-    
-    # Count indicators
+
     restaurant_score = sum(restaurant_indicators)
     location_score = sum(location_indicators)
-    
-    # If query is Title Case and short (2-4 words), likely a restaurant name
+
     if query.istitle() and 2 <= len(query_words) <= 4 and location_score == 0:
         restaurant_score += 2
-    
-    # Decision logic
+
     if restaurant_score > location_score:
         return True
-    elif location_score > restaurant_score:
+    if location_score > restaurant_score:
         return False
-    else:
-        # Tie-breaker: if it's capitalized and not too long, treat as restaurant name
-        return query.istitle() and len(query_words) <= 5
+    return query.istitle() and len(query_words) <= 5
+
+
+async def enrich_restaurant(resto: dict, user_lat: float, user_lng: float) -> RestaurantResponse:
+    """
+    Fetch reviews then call Claude to analyze — all in one async task per restaurant.
+    These run concurrently for all restaurants via asyncio.gather().
+    """
+    # Get reviews
+    reviews = await review_scraper.scrape_reviews(resto["place_id"])
+    review_texts = [r.text for r in reviews if r.text]
+
+    # Claude analysis (or fallback if no API key)
+    insights = await analyze_restaurant(
+        name=resto["name"],
+        address=resto.get("address", ""),
+        rating=resto.get("rating", 0.0),
+        reviews=review_texts,
+    )
+
+    # Distance calculation
+    distance = None
+    if user_lat and user_lng and resto.get("lat") and resto.get("lng"):
+        distance = calculate_distance(user_lat, user_lng, resto["lat"], resto["lng"])
+
+    return RestaurantResponse(
+        name=resto["name"],
+        rating=resto.get("rating", 0.0),
+        trueSentiment=insights.get("trueSentiment", "N/A"),
+        vibeCheck=[],
+        vibeDescription=insights.get("vibeDescription"),
+        bestFor=insights.get("bestFor", []),
+        skipIf=insights.get("skipIf", []),
+        mustTryDishes=insights.get("mustTryDishes", []),
+        commonComplaints=insights.get("commonComplaints", []),
+        neighborhoodNote=insights.get("neighborhoodNote"),
+        address=resto.get("address"),
+        place_id=resto.get("place_id"),
+        distance=distance,
+        lat=resto.get("lat"),
+        lng=resto.get("lng"),
+        photo_url=resto.get("photo_url"),
+        photos=resto.get("photos", []),
+        website=resto.get("website"),
+    )
 
 
 @router.get("/search", response_model=List[RestaurantResponse])
 async def search_restaurants(
-    location: str = Query(..., min_length=2, description="Location or restaurant name to search"),
-    max_results: int = Query(10, ge=1, le=20, description="Maximum number of results"),
-    user_lat: float = Query(None, description="User's latitude for distance calculation"),
-    user_lng: float = Query(None, description="User's longitude for distance calculation")
+    location: str = Query(..., min_length=2),
+    max_results: int = Query(10, ge=1, le=20),
+    user_lat: float = Query(None),
+    user_lng: float = Query(None),
 ):
-    """
-    Search for restaurants by location and return AI-powered insights.
-    
-    This endpoint:
-    1. Searches Google Places for restaurants
-    2. Scrapes reviews for each restaurant
-    3. Runs ML models to extract insights
-    4. Returns enriched restaurant data
-    
-    **Note**: For demo purposes, this may use mock data if APIs are not configured.
-    """
-    
     try:
-        logger.info(f"Search query received: '{location}'")
-        
-        # Step 1: Intelligent search detection
-        # Determine if this is a restaurant name search or location search
-        is_restaurant_name = detect_restaurant_name_query(location)
-        
-        basic_restaurants = []
-        
+        logger.info("Search: '%s'", location)
+        is_name_search = detect_restaurant_name_query(location)
+
+        # Step 1: Google Places — get restaurants with photos, website, address
         try:
-            if is_restaurant_name:
-                # Search by restaurant name (e.g., "Joe's Pizza", "The Cheesecake Factory")
-                logger.info(f"Detected restaurant name search: '{location}'")
+            if is_name_search:
                 basic_restaurants = await google_places.search_by_name(location, max_results)
-                logger.info(f"Found {len(basic_restaurants)} restaurants by name")
+                if not basic_restaurants:
+                    basic_restaurants = await google_places.find_restaurants(location, max_results)
             else:
-                # Search by location (e.g., "Pizza Boston", "Sushi NYC")
-                logger.info(f"Detected location search: '{location}'")
                 basic_restaurants = await google_places.find_restaurants(location, max_results)
-                logger.info(f"Found {len(basic_restaurants)} restaurants by location")
-            
-            # If name search returns no results, try location-based search as fallback
-            if not basic_restaurants and is_restaurant_name:
-                logger.info(f"No results from name search, trying location-based search")
-                basic_restaurants = await google_places.find_restaurants(location, max_results)
-            
-            # Check if we got any restaurants
-            if not basic_restaurants or len(basic_restaurants) == 0:
-                logger.warning(f"No restaurants found for query: '{location}'. This might be an API issue.")
-                # Don't return mock data - return empty list instead
-                return []
-                
         except Exception as e:
-            logger.error(f"Google Places API error: {e}")
-            logger.error(f"Error type: {type(e).__name__}")
-            import traceback
-            logger.error(f"Traceback: {traceback.format_exc()}")
-            # Don't return mock data - raise the error instead so we can see what's wrong
-            raise HTTPException(
-                status_code=500,
-                detail=f"Google Places API error: {str(e)}. Please check your API key and ensure Places API is enabled."
-            )
-        
-        # Step 2: Process each restaurant
-        enriched_restaurants = []
-        
-        for resto in basic_restaurants:
-            try:
-                logger.info(f"Processing restaurant: {resto['name']}")
-                
-                # Step 3: Scrape reviews
-                reviews = await review_scraper.scrape_reviews(resto['place_id'])
-                
-                # Hybrid Approach: Use ML if we have enough reviews, otherwise generate insights
-                if not reviews or len(reviews) < 5:
-                    logger.info(f"Limited reviews for {resto['name']}, generating hybrid insights")
-                    
-                    # Generate ML insights based on restaurant data
-                    ml_insights = generate_ml_insights({
-                        'name': resto['name'],
-                        'rating': resto['rating']
-                    })
-                    
-                    # Calculate distance if user location provided
-                    distance = None
-                    if user_lat and user_lng and resto.get('lat') and resto.get('lng'):
-                        distance = calculate_distance(user_lat, user_lng, resto['lat'], resto['lng'])
-                    
-                    # Get photo URL
-                    photo_url = resto.get('photo_url')
-                    logger.info(f"Hybrid path for {resto['name']}: photo_url={'Found' if photo_url else 'None'}, keys={list(resto.keys())}")
-                    
-                    enriched_restaurants.append(
-                        RestaurantResponse(
-                            name=resto['name'],
-                            rating=resto['rating'],
-                            trueSentiment=ml_insights['trueSentiment'],
-                            vibeCheck=ml_insights['vibeCheck'],
-                            mustTryDishes=ml_insights['mustTryDishes'],
-                            commonComplaints=ml_insights['commonComplaints'],
-                            address=resto.get('address'),
-                            place_id=resto['place_id'],
-                            distance=distance,
-                            lat=resto.get('lat'),
-                            lng=resto.get('lng'),
-                            photo_url=photo_url
-                        )
-                    )
-                    continue
-                
-                # Step 4: Run ML Pipeline
-                review_texts = [r.text for r in reviews]
-                
-                # 4a. Sentiment Analysis
-                true_sentiment = sentiment_analyzer.analyze(review_texts)
-                
-                # 4b. Topic Modeling (Vibe Check)
-                vibes = topic_modeler.extract_vibes(review_texts)
-                
-                # 4c. Keyword Extraction (Dishes)
-                dishes = keyword_extractor.extract_dishes(review_texts)
-                
-                # 4d. Complaint Detection
-                complaints = keyword_extractor.extract_complaints(review_texts)
-                
-                # Calculate distance if user location provided
-                distance = None
-                if user_lat and user_lng and resto.get('lat') and resto.get('lng'):
-                    distance = calculate_distance(user_lat, user_lng, resto['lat'], resto['lng'])
-                
-                # Step 5: Assemble final data
-                photo_url = resto.get('photo_url')
-                logger.info(f"Assembling response for {resto['name']}: photo_url={'Present' if photo_url else 'Missing'}")
-                
-                enriched_restaurant = RestaurantResponse(
-                    name=resto['name'],
-                    rating=resto['rating'],
-                    trueSentiment=true_sentiment,
-                    vibeCheck=vibes,
-                    mustTryDishes=dishes,
-                    commonComplaints=complaints,
-                    address=resto.get('address'),
-                    place_id=resto['place_id'],
-                    distance=distance,
-                    lat=resto.get('lat'),
-                    lng=resto.get('lng'),
-                    photo_url=photo_url
-                )
-                
-                enriched_restaurants.append(enriched_restaurant)
-                logger.info(f"Successfully processed: {resto['name']}")
-                
-            except Exception as e:
-                logger.error(f"Error processing restaurant {resto['name']}: {e}")
-                # Continue with next restaurant
-                continue
-        
-        if not enriched_restaurants:
-            raise HTTPException(
-                status_code=404,
-                detail="No restaurants found for the given location"
-            )
-        
-        logger.info(f"Returning {len(enriched_restaurants)} enriched restaurants")
-        return enriched_restaurants
-        
+            logger.error("Google Places error: %s", e)
+            raise HTTPException(status_code=502, detail="Could not reach Google Places API")
+
+        if not basic_restaurants:
+            return []
+
+        # Step 2: Fire all Claude analyses in parallel
+        tasks = [
+            enrich_restaurant(resto, user_lat, user_lng)
+            for resto in basic_restaurants
+        ]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        enriched = []
+        for i, result in enumerate(results):
+            if isinstance(result, Exception):
+                logger.error("Failed to enrich %s: %s", basic_restaurants[i]["name"], result)
+            else:
+                enriched.append(result)
+
+        if not enriched:
+            raise HTTPException(status_code=404, detail="No restaurants found")
+
+        logger.info("Returning %d restaurants", len(enriched))
+        return enriched
+
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Search error: {e}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Internal server error: {str(e)}"
-        )
-
-
-def get_mock_data() -> List[RestaurantResponse]:
-    """
-    Returns mock data for testing when APIs are not available.
-    This should be removed in production.
-    """
-    return [
-        RestaurantResponse(
-            name="Joe's Pizza",
-            rating=4.5,
-            trueSentiment="82% Positive",
-            vibeCheck=["#Loud", "#GoodForGroups", "#Casual"],
-            mustTryDishes=["Spicy Rigatoni", "Garlic Knots", "Margherita Pizza"],
-            commonComplaints=["Slow service on weekends", "Can get very crowded"],
-            address="123 Main St, Lewiston, ME",
-            place_id="mock_place_id_1"
-        ),
-        RestaurantResponse(
-            name="The Riverside Bistro",
-            rating=4.8,
-            trueSentiment="91% Positive",
-            vibeCheck=["#Romantic", "#Quiet", "#DateNight"],
-            mustTryDishes=["Pan-Seared Salmon", "Lobster Risotto", "Chocolate Soufflé"],
-            commonComplaints=["Pricey", "Limited parking"],
-            address="456 River Rd, Lewiston, ME",
-            place_id="mock_place_id_2"
-        ),
-        RestaurantResponse(
-            name="Mama's Kitchen",
-            rating=4.3,
-            trueSentiment="76% Positive",
-            vibeCheck=["#FamilyFriendly", "#Comfort", "#HomeStyle"],
-            mustTryDishes=["Chicken Pot Pie", "Meatloaf", "Apple Pie"],
-            commonComplaints=["Long wait times", "Small portions"],
-            address="789 Oak Ave, Lewiston, ME",
-            place_id="mock_place_id_3"
-        ),
-        RestaurantResponse(
-            name="Sakura Sushi Bar",
-            rating=4.7,
-            trueSentiment="88% Positive",
-            vibeCheck=["#Fresh", "#Modern", "#HealthyOptions"],
-            mustTryDishes=["Dragon Roll", "Salmon Sashimi", "Miso Soup"],
-            commonComplaints=["Expensive", "Limited seating"],
-            address="321 Cherry Ln, Lewiston, ME",
-            place_id="mock_place_id_4"
-        )
-    ]
-
+        logger.error("Search error: %s", e)
+        raise HTTPException(status_code=500, detail=str(e))
