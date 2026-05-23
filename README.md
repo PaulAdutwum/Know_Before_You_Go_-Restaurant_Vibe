@@ -2,7 +2,7 @@
 
 **Know Before You Go: Spend 30 minutes scrolling, or 2 minutes deciding?**
 
-This AI-powered application helps users make faster, more informed dining decisions by analyzing over 100,000+ unstructured restaurant reviews. Instead of relying on star ratings, it extracts real insights about vibe, must-try dishes, and common complaints — so users can quickly understand what to expect before they go.
+This AI-powered application helps users make faster, more informed dining decisions by analyzing over 1000s unstructured restaurant reviews. Instead of relying on star ratings, it extracts real insights about vibe, must-try dishes, and common complaints — so users can quickly understand what to expect before they go.
 
 ---
 
