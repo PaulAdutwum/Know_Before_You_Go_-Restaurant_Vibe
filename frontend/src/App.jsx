@@ -5,28 +5,40 @@ import Logo from './components/Logo';
 
 const DISCOVER_CARDS = [
   {
-    icon: '↑↓',
-    title: 'True Sentiment',
-    desc: 'Understand whether people loved the experience or left frustrated — beyond a simple star count.',
+    icon: '◎',
+    title: 'Atmosphere & Vibe',
+    desc: 'A real sentence describing what it feels like inside — noise level, lighting, crowd energy. Not a generic tag.',
     delay: 0,
   },
   {
-    icon: '◎',
-    title: 'Vibe Signals',
-    desc: 'See the actual atmosphere: quiet and intimate, loud and lively, romantic, or family-friendly.',
+    icon: '↑↓',
+    title: 'True Sentiment',
+    desc: 'A percentage calculated from what reviewers actually said — not just the star average.',
     delay: 100,
   },
   {
     icon: '✦',
     title: 'Dish Highlights',
-    desc: 'Discover the items reviewers mention most — the dishes worth ordering every time.',
+    desc: 'The food and drinks reviewers mention by name — real items worth ordering, not guesses.',
     delay: 200,
+  },
+  {
+    icon: '◈',
+    title: 'Right for Your Night',
+    desc: 'Know if it fits — date night, groups of 4+, solo lunch, business dinner. And when to skip it.',
+    delay: 300,
+  },
+  {
+    icon: '📍',
+    title: 'Neighborhood Safety',
+    desc: 'Whether the area is safe to walk at night, what\'s nearby, and landmarks worth knowing.',
+    delay: 400,
   },
   {
     icon: '!',
     title: 'Honest Warnings',
-    desc: 'Know the most common complaints before you book so there are no surprises.',
-    delay: 300,
+    desc: 'The most common complaints from real diners — slow service, parking, noise — before you book.',
+    delay: 500,
   },
 ];
 
@@ -92,29 +104,42 @@ function App() {
               Know the vibe<br className="hidden sm:block" /> before you walk in.
             </h1>
             <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-              AI reads real reviews so you don't have to — surfacing true sentiment, atmosphere signals, must-try dishes, and honest warnings in one clean view.
+              Know the vibe, whether it's right for your night, what to order, and if the area is safe to walk — all from real reviews, before you go.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mb-12 max-w-3xl mx-auto">
-              <div className="border border-white/10 rounded-3xl p-6 bg-black/80 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition duration-300 hover:shadow-[0_24px_80px_rgba(217,119,0,0.22)]">
-                <div className="text-3xl sm:text-4xl font-semibold text-amber-300 mb-2">1K+</div>
-                <p className="text-sm text-slate-400">Reviews analyzed from real dining experiences.</p>
-                <div className="mt-4 space-y-2">
-                  <div className="h-2 rounded-full bg-white/10">
-                    <div className="h-2 rounded-full bg-amber-400" style={{ width: '75%' }} />
-                  </div>
-                  <div className="text-xs text-slate-500">Food, service, atmosphere coverage</div>
+            {/* Feature preview strips */}
+            <div className="mb-12 max-w-xl mx-auto w-full space-y-3 text-left">
+              {/* Vibe */}
+              <div className="rounded-2xl border border-white/10 bg-black/80 px-5 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-1.5">Vibe</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  "Dimly lit and buzzing — a packed tapas bar where the energy runs high all night. Bar counter seats are always the best spot."
+                </p>
+              </div>
+
+              {/* When to go */}
+              <div className="rounded-2xl border border-white/10 bg-black/80 px-5 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-2">Know when to go</p>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="text-xs text-slate-500 font-semibold self-center">Best for:</span>
+                  {['Date Night', 'Groups 4+', 'Late Night'].map(c => (
+                    <span key={c} className="bg-green-400/10 text-green-300 border border-green-400/20 text-xs px-2.5 py-0.5 rounded-full">{c}</span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-xs text-slate-500 font-semibold self-center">Skip if:</span>
+                  {['Quiet Conversation', 'Quick Bite'].map(c => (
+                    <span key={c} className="bg-orange-400/10 text-orange-300 border border-orange-400/20 text-xs px-2.5 py-0.5 rounded-full">{c}</span>
+                  ))}
                 </div>
               </div>
-              <div className="border border-white/10 rounded-3xl p-6 bg-black/80 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition duration-300 hover:shadow-[0_24px_80px_rgba(217,119,0,0.22)]">
-                <div className="text-3xl sm:text-4xl font-semibold text-amber-300 mb-2">5</div>
-                <p className="text-sm text-slate-400">Atmosphere dimensions measured for each restaurant.</p>
-                <div className="mt-4 grid gap-2">
-                  <div className="h-2 rounded-full bg-white/10"><div className="h-2 rounded-full bg-amber-400" style={{ width: '60%' }} /></div>
-                  <div className="h-2 rounded-full bg-white/10"><div className="h-2 rounded-full bg-amber-400" style={{ width: '45%' }} /></div>
-                  <div className="h-2 rounded-full bg-white/10"><div className="h-2 rounded-full bg-amber-400" style={{ width: '30%' }} /></div>
-                </div>
-                <div className="mt-2 text-xs text-slate-500">Quiet / Lively / Romantic</div>
+
+              {/* Neighborhood */}
+              <div className="rounded-2xl border border-white/10 bg-black/80 px-5 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-1.5">The neighborhood</p>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  South End, Boston — walkable, safe to stroll at night. Near SoWa Art District and Peters Park.
+                </p>
               </div>
             </div>
 
@@ -135,18 +160,18 @@ function App() {
               <div className="text-center mb-16">
                 <h2 className="text-4xl sm:text-5xl font-bold mb-4">What You'll Discover</h2>
                 <p className="text-lg text-slate-400 max-w-xl mx-auto">
-                  Four clear lenses. No star-rating confusion.
+                  Six things Google Maps won't tell you.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {DISCOVER_CARDS.map(({ icon, title, desc, delay }) => (
                   <div
                     key={title}
                     className="rounded-3xl border border-white/10 p-8 bg-black/80 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition duration-300 hover:shadow-[0_24px_80px_rgba(217,119,0,0.22)] animate-fade-in"
                     style={{ animationDelay: `${delay}ms` }}
                   >
-                    <div className="w-10 h-10 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-300 font-bold text-base mb-4">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-200/70 font-bold text-base mb-4">
                       {icon}
                     </div>
                     <h3 className="text-lg font-bold mb-3">{title}</h3>

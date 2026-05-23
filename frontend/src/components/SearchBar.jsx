@@ -73,7 +73,7 @@ function SearchBar({ onSearch, isLoading }) {
           <p className="mt-3 text-sm text-red-400 text-center animate-fade-in">{geoError}</p>
         )}
 
-        <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-400">
+        <div className="mt-4 hidden sm:flex flex-wrap items-center gap-3 text-sm text-slate-400">
           <span className="font-semibold text-slate-300">Try:</span>
           <button
             type="button"

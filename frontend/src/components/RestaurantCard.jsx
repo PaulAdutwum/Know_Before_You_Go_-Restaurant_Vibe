@@ -8,7 +8,7 @@ function StarRating({ rating }) {
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            className={`text-sm ${star <= Math.round(rating) ? 'text-amber-400' : 'text-white/15'}`}
+            className={`text-sm ${star <= Math.round(rating) ? 'text-amber-300/60' : 'text-white/15'}`}
           >
             ★
           </span>
@@ -63,7 +63,7 @@ function RestaurantCard({ restaurant }) {
               href={directionsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 text-xs font-semibold text-amber-400 hover:text-amber-300 border border-amber-400/30 hover:border-amber-400/60 rounded-full px-2.5 py-0.5 transition"
+              className="shrink-0 text-xs font-semibold text-amber-300/60 hover:text-amber-200/70 border border-amber-400/30 hover:border-amber-400/60 rounded-full px-2.5 py-0.5 transition"
             >
               Directions ↗
             </a>
@@ -80,7 +80,7 @@ function RestaurantCard({ restaurant }) {
         {/* Vibe description */}
         {restaurant.vibeDescription && (
           <div className="border-t border-white/5 pt-4 mb-4">
-            <p className="text-xs font-semibold uppercase tracking-widest text-amber-300 mb-1.5">Vibe</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-1.5">Vibe</p>
             <p className="text-sm text-slate-300 leading-relaxed">
               {restaurant.vibeDescription}
             </p>
@@ -109,7 +109,7 @@ function RestaurantCard({ restaurant }) {
                 {restaurant.skipIf.map((item, i) => (
                   <span
                     key={i}
-                    className="bg-red-400/10 text-red-300 border border-red-400/20 text-xs px-2.5 py-0.5 rounded-full"
+                    className="bg-orange-400/10 text-orange-300 border border-orange-400/20 text-xs px-2.5 py-0.5 rounded-full"
                   >
                     {item}
                   </span>
@@ -122,7 +122,7 @@ function RestaurantCard({ restaurant }) {
         {/* True Sentiment */}
         {restaurant.trueSentiment && (
           <div className="border-t border-white/5 pt-4 mb-4">
-            <p className="text-xs font-semibold uppercase tracking-widest text-amber-300 mb-1">True Sentiment</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-1">True Sentiment</p>
             <p className="text-sm text-slate-300">{restaurant.trueSentiment}</p>
           </div>
         )}
@@ -130,7 +130,7 @@ function RestaurantCard({ restaurant }) {
         {/* Must Try */}
         {restaurant.mustTryDishes?.length > 0 && (
           <div className="border-t border-white/5 pt-4 mb-4">
-            <p className="text-xs font-semibold uppercase tracking-widest text-amber-300 mb-1">Must Try</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-amber-200/70 mb-1">Must Try</p>
             <p className="text-sm text-slate-300 leading-relaxed">
               {restaurant.mustTryDishes.join(' · ')}
             </p>
@@ -174,7 +174,7 @@ function RestaurantCard({ restaurant }) {
             href={reserveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-300 hover:bg-amber-400/20 hover:border-amber-400/40 transition"
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-200/70 hover:bg-amber-400/20 hover:border-amber-400/40 transition"
           >
             Reserve ↗
           </a>
