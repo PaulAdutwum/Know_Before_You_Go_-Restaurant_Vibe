@@ -153,7 +153,11 @@ async def search_restaurants(
                 if not basic_restaurants:
                     basic_restaurants = await google_places.find_restaurants(location, max_results)
             else:
-                basic_restaurants = await google_places.find_restaurants(location, max_results)
+                try:
+                    basic_restaurants = await google_places.find_restaurants(location, max_results)
+                except Exception:
+                    logger.info("Geocoding failed for '%s', falling back to name search", location)
+                    basic_restaurants = await google_places.search_by_name(location, max_results)
         except Exception as e:
             logger.error("Google Places error: %s", e)
             raise HTTPException(status_code=502, detail="Could not reach Google Places API")
