@@ -1,4 +1,4 @@
-# 🔍 Review Scraping System Setup Guide
+#  Review Scraping System Setup Guide
 
 ## Overview
 
@@ -11,7 +11,7 @@ The review scraping system provides 100+ reviews per restaurant for accurate ML 
 
 ---
 
-## 🚀 Quick Setup
+##  Quick Setup
 
 ### 1. Install Redis
 
@@ -131,8 +131,8 @@ npm run dev
 
 1. **User searches** → Frontend sends request to backend
 2. **Backend checks DB** → Are there cached reviews?
-   - ✅ **Yes** → Use cached data (fast!)
-   - ❌ **No** → Queue background scraping job
+   -  **Yes** → Use cached data (fast!)
+   - **No** → Queue background scraping job
 3. **Celery worker** → Scrapes reviews in background
    - Google Maps: 100+ reviews
    - Reddit: Supplementary mentions
@@ -266,16 +266,16 @@ curl "http://localhost:8000/api/v1/scraping/status/1"
 
 **Google Maps Scraping:**
 
-- ⚠️ Against Google's Terms of Service
-- ✅ OK for learning/prototype projects
-- ❌ NOT for production/commercial use
-- 💡 For production, use: Yelp API, Google Places API (paid tier), or user-generated reviews
+- Against Google's Terms of Service
+- OK for learning/prototype projects
+- NOT for production/commercial use
+- For production, use: Yelp API, Google Places API (paid tier), or user-generated reviews
 
 **Reddit API:**
 
-- ✅ Fully legal with API credentials
-- ✅ OK for production
-- 📝 Requires Reddit app registration
+- Fully legal with API credentials
+- oK for production
+-  Requires Reddit app registration
 
 ### Rate Limiting
 

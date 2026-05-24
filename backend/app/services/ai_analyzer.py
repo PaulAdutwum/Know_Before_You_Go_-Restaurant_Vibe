@@ -39,7 +39,7 @@ Return ONLY this JSON — no extra text:
 {{
   "trueSentiment": "82% Positive",
   "vibeDescription": "Describe what it actually feels like to be inside — 2 to 3 sentences covering the energy, noise level, lighting, crowd type, and overall feel. Be specific and vivid. Pull real details from the reviews.",
-  "bestFor": ["Date Night", "Groups 4+"],
+  "bestFor": ["Date Night", "Groups 4+", "studies", "Game Night"],
   "skipIf": ["Quiet Conversation"],
   "mustTryDishes": ["Lobster Roll", "Clam Chowder"],
   "commonComplaints": ["Service slow on weekends", "Limited parking"],
