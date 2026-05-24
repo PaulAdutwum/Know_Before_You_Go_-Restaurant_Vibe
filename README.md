@@ -66,11 +66,6 @@ JSON response → React renders restaurant cards
 | `openai` | OpenAI API client — `gpt-4o-mini` for review analysis |
 | `python-dotenv` | Loads API keys from `.env` file |
 
-### Deployment
-| Service | Purpose |
-|---|---|
-| Vercel | Frontend hosting |
-| Railway | Backend hosting |
 
 ---
 
