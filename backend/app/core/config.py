@@ -29,6 +29,8 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
         "http://127.0.0.1:5174",
         "http://127.0.0.1:3000",
+        "https://know-before-you-go-restaurant-vibe.vercel.app",
+        "https://*.vercel.app",
     ]
     
     # Google Places API
