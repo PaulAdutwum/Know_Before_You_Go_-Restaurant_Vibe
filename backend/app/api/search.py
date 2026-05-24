@@ -16,7 +16,7 @@ from math import radians, cos, sin, asin, sqrt
 from app.models.restaurant import RestaurantResponse
 from app.services.google_places import GooglePlacesService
 from app.services.review_scraper import ReviewScraper
-from app.services.claude_analyzer import analyze_restaurant
+from app.services.ai_analyzer import analyze_restaurant
 
 router = APIRouter()
 google_places = GooglePlacesService()

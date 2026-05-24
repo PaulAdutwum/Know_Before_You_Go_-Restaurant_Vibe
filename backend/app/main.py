@@ -1,21 +1,18 @@
 """
-VibeFinder API - Main Application Entry Point
+Know Before You Go — Backend API
 
-This is the core FastAPI application that orchestrates:
+Orchestrates:
 - Restaurant search via Google Places API
-- Review scraping and processing
-- ML-powered sentiment analysis, topic modeling, and keyword extraction
+- Review fetching per restaurant
+- AI-powered review analysis via OpenAI gpt-4o-mini
 """
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Optional
-import os
 from dotenv import load_dotenv
 
 from app.core.config import settings
 from app.api import search
-from app.models.restaurant import RestaurantResponse
 
 # Load environment variables
 load_dotenv()
