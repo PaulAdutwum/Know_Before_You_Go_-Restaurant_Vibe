@@ -4,7 +4,6 @@ VibeFinder API - Main Application Entry Point
 This is the core FastAPI application that orchestrates:
 - Restaurant search via Google Places API
 - Review scraping and processing
-- ML-powered sentiment analysis, topic modeling, and keyword extraction
 """
 
 from fastapi import FastAPI, HTTPException, Query

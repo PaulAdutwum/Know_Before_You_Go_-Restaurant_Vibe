@@ -1,255 +1,151 @@
-# VibeFinder Backend API
+# Know Before You Go — Backend API
 
-FastAPI-powered backend with ML-based restaurant insights.
+FastAPI backend that powers restaurant search, review fetching, and AI-generated insights.
 
-## 🚀 Quick Start
+## How It Works
 
-### Prerequisites
+1. Frontend sends a search query to `GET /api/v1/search`
+2. Backend detects whether the query is a restaurant name or a location
+3. Google Places API is called to find restaurants and fetch their reviews
+4. OpenAI `gpt-4o-mini` analyzes the reviews for all restaurants in parallel
+5. Results are validated and returned as JSON
 
-- Python 3.9 or higher
-- PostgreSQL 12 or higher
-- pip (Python package manager)
+## Quick Start
 
-### Installation
-
-1. **Create a virtual environment:**
+### 1. Create and activate a virtual environment
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
-2. **Install dependencies:**
+### 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Download NLTK data (for sentiment analysis):**
+### 3. Set up environment variables
 
-```bash
-python -c "import nltk; nltk.download('vader_lexicon'); nltk.download('stopwords'); nltk.download('punkt')"
+Create a `.env` file in the `backend/` folder:
+
+```
+GOOGLE_PLACES_API_KEY=your_google_places_api_key
+OPENAI_API_KEY=your_openai_api_key
 ```
 
-4. **Set up environment variables:**
-
-Copy `.env.example` to `.env` and configure:
+### 4. Run the server
 
 ```bash
-# Edit the .env file with your settings
-DATABASE_URL=postgresql://username:password@localhost:5432/vibefinder
-GOOGLE_PLACES_API_KEY=your_api_key_here
-```
-
-5. **Set up PostgreSQL database:**
-
-```bash
-# Create database
-createdb vibefinder
-
-# Or using psql:
-psql -U postgres
-CREATE DATABASE vibefinder;
-CREATE USER vibefinder WITH PASSWORD 'vibefinder';
-GRANT ALL PRIVILEGES ON DATABASE vibefinder TO vibefinder;
-\q
-```
-
-6. **Initialize database tables:**
-
-```bash
-python setup_db.py
-```
-
-### Running the Server
-
-```bash
-# Development mode (with auto-reload)
 uvicorn app.main:app --reload
-
-# Or using the main.py directly
-python -m app.main
 ```
 
-The API will be available at:
-- **API**: http://localhost:8000
-- **Interactive Docs**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+API runs at `http://localhost:8000`
+Interactive docs at `http://localhost:8000/docs`
 
-## 📚 API Endpoints
+---
 
-### Main Search Endpoint
+## API Endpoint
 
-**GET** `/api/v1/search?location={location}&max_results={max_results}`
+### `GET /api/v1/search`
 
-Search for restaurants with AI-powered insights.
+Search for restaurants by location or name.
 
-**Parameters:**
-- `location` (required): City or location (e.g., "Lewiston, Maine")
-- `max_results` (optional): Maximum number of results (default: 10, max: 20)
+**Query Parameters:**
 
-**Example:**
+| Parameter | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `location` | string | Yes | — | City, neighborhood, or restaurant name |
+| `max_results` | int | No | 10 | Max restaurants to return (1–20) |
+| `user_lat` | float | No | null | User's GPS latitude (from Near Me) |
+| `user_lng` | float | No | null | User's GPS longitude (from Near Me) |
+
+**Example requests:**
 
 ```bash
-curl "http://localhost:8000/api/v1/search?location=Lewiston,%20Maine&max_results=5"
+# Location search
+curl "http://localhost:8000/api/v1/search?location=Sushi+downtown+Boston&max_results=10"
+
+# Near Me search (with GPS)
+curl "http://localhost:8000/api/v1/search?location=42.3601,-71.0589&max_results=10&user_lat=42.3601&user_lng=-71.0589"
 ```
 
-**Response:**
+**Example response:**
 
 ```json
 [
   {
-    "name": "Joe's Pizza",
-    "rating": 4.5,
-    "trueSentiment": "82% Positive",
-    "vibeCheck": ["#Loud", "#GoodForGroups"],
-    "mustTryDishes": ["Spicy Rigatoni", "Garlic Knots"],
-    "commonComplaints": ["Slow service on weekends"],
-    "address": "123 Main St, Lewiston, ME",
-    "place_id": "ChIJ..."
+    "name": "O Ya",
+    "rating": 4.7,
+    "trueSentiment": "91% Very Positive",
+    "vibeDescription": "Intimate and hushed — a 12-seat omakase counter where every course feels deliberate. Lighting is low, conversation stays quiet, and the energy is focused entirely on the food.",
+    "bestFor": ["Date Night", "Special Occasion"],
+    "skipIf": ["Groups 4+", "Casual Bite"],
+    "mustTryDishes": ["Wagyu nigiri", "Foie gras torchon"],
+    "commonComplaints": ["Very expensive", "Hard to get a reservation"],
+    "neighborhoodNote": "Downtown Boston near the Theater District. Safe to walk at night, close to South Station.",
+    "address": "9 East St, Boston, MA 02111",
+    "distance": "0.3 mi",
+    "photo_url": "https://maps.googleapis.com/...",
+    "photos": ["https://...", "https://..."],
+    "website": "https://o-ya.restaurant"
   }
 ]
 ```
 
-### Health Check
+---
 
-**GET** `/health`
-
-Check if the API is running.
-
-## 🧠 ML Pipeline
-
-The backend uses multiple NLP/ML models:
-
-### 1. Sentiment Analysis (VADER)
-- Analyzes review sentiment (-1 to +1 scale)
-- Calculates "True Sentiment" percentage
-- Fast and accurate for social media/review text
-
-### 2. Topic Modeling (LDA)
-- Discovers hidden topics in reviews
-- Maps topics to vibe tags (#Romantic, #Loud, etc.)
-- Uses scikit-learn's LatentDirichletAllocation
-
-### 3. Keyword Extraction (TF-IDF)
-- Extracts must-try dishes using TF-IDF
-- Identifies common complaints from negative reviews
-- Pattern matching for food items
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 backend/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py              # FastAPI app entry point
+│   ├── main.py              # FastAPI app, CORS, router registration
 │   ├── api/
-│   │   ├── __init__.py
-│   │   └── search.py        # Search endpoint
+│   │   └── search.py        # The /search endpoint + pipeline orchestration
 │   ├── core/
-│   │   ├── __init__.py
-│   │   └── config.py        # App configuration
+│   │   └── config.py        # API keys and settings via Pydantic BaseSettings
 │   ├── models/
-│   │   ├── __init__.py
-│   │   ├── database.py      # SQLAlchemy models
-│   │   └── restaurant.py    # Pydantic models
-│   ├── services/
-│   │   ├── __init__.py
-│   │   ├── google_places.py # Google Places API
-│   │   └── review_scraper.py # Review scraping
-│   └── ml/
-│       ├── __init__.py
-│       ├── sentiment_analyzer.py  # VADER sentiment
-│       ├── topic_modeler.py       # LDA topic modeling
-│       └── keyword_extractor.py   # TF-IDF extraction
-├── setup_db.py              # Database setup script
-├── requirements.txt         # Python dependencies
-├── .env                     # Environment variables
-└── README.md
+│   │   └── restaurant.py    # Pydantic response model (RestaurantResponse)
+│   └── services/
+│       ├── google_places.py # Google Places API — find restaurants + fetch reviews
+│       ├── review_scraper.py# Pulls review text from Google Places per restaurant
+│       └── claude_analyzer.py # Sends reviews to OpenAI, returns structured insights
+├── requirements.txt
+└── .env                     # API keys (not committed to git)
 ```
 
-## 🔑 Google Places API Setup
+---
+
+## Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| Python 3.12 | Language |
+| FastAPI | Web framework + automatic API docs |
+| Uvicorn | ASGI server |
+| Pydantic | Data validation and settings management |
+| `googlemaps` | Google Places API client |
+| `openai` | OpenAI API client (`gpt-4o-mini`) |
+| `python-dotenv` | Loads `.env` file |
+
+---
+
+## Google Places API Setup
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project (or select existing)
-3. Enable these APIs:
-   - Places API
-   - Geocoding API
-4. Create credentials (API Key)
-5. Add the API key to `.env` file
+2. Enable **Places API** and **Geocoding API**
+3. Create an API key
+4. Add it to your `.env` file as `GOOGLE_PLACES_API_KEY`
 
-## 🗄️ Database Schema
+## OpenAI API Setup
 
-### Restaurants Table
+1. Go to [platform.openai.com](https://platform.openai.com/)
+2. Create an API key
+3. Add it to your `.env` file as `OPENAI_API_KEY`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | Integer | Primary key |
-| place_id | String | Google Places ID (unique) |
-| name | String | Restaurant name |
-| rating | Float | Google rating |
-| address | Text | Full address |
-| total_ratings | Integer | Number of ratings |
-| created_at | DateTime | Creation timestamp |
-| updated_at | DateTime | Update timestamp |
+---
 
-### Reviews Table
+## Deployment
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | Integer | Primary key |
-| restaurant_id | Integer | Foreign key to restaurants |
-| review_text | Text | Review content |
-| rating | Float | Review rating |
-| author | String | Review author |
-| review_date | String | Review date |
-| sentiment_score | Float | VADER sentiment score |
-| created_at | DateTime | Creation timestamp |
-
-## 🧪 Testing
-
-```bash
-# Install test dependencies (already in requirements.txt)
-pip install pytest pytest-asyncio httpx
-
-# Run tests
-pytest
-
-# With coverage
-pytest --cov=app tests/
-```
-
-## 🚀 Deployment
-
-### Using Docker (Recommended)
-
-```dockerfile
-# Coming soon - Dockerfile
-```
-
-### Manual Deployment
-
-1. Set up a PostgreSQL database
-2. Configure environment variables
-3. Install dependencies
-4. Run with uvicorn in production mode
-
-```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
-```
-
-## 📝 Notes
-
-- The app currently uses mock data if Google Places API is not configured
-- Review scraping is limited to Google Places reviews (5 max per restaurant)
-- For production, implement caching and rate limiting
-- Consider using Celery for async ML processing with large datasets
-
-## 🤝 Contributing
-
-This is a demonstration project showcasing full-stack ML integration.
-
-## 📄 License
-
-MIT License
-
+Backend is deployed on **Railway**. Set `GOOGLE_PLACES_API_KEY` and `OPENAI_API_KEY` as environment variables in the Railway project settings.

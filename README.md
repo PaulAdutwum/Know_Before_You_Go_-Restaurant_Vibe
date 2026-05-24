@@ -1,131 +1,171 @@
 # Know Before You Go
 
-**Know Before You Go: Spend 30 minutes scrolling, or 2 minutes deciding?**
+**Know the vibe before you walk in.**
 
-This AI-powered application helps users make faster, more informed dining decisions by analyzing over 1000s unstructured restaurant reviews. Instead of relying on star ratings, it extracts real insights about vibe, must-try dishes, and common complaints — so users can quickly understand what to expect before they go.
+An AI-powered restaurant discovery app that turns raw customer reviews into real, actionable insights — so you know the atmosphere, what to order, and what to watch out for before you go.
+
+Instead of reading through dozens of reviews or trusting a star rating, you get a vibe description, a true sentiment score, must-try dishes, honest warnings, and neighborhood safety notes — all extracted from what real diners actually said.
 
 ---
 
 ## Why This Was Built
 
-This project started from a simple problem I kept seeing, especially among international students — choosing where to eat in a new city is often confusing and time-consuming. Most people rely on scrolling through dozens of reviews, trying to piece together what a place is actually like.
+Choosing where to eat in a new city is surprisingly hard. Most people scroll through dozens of reviews trying to piece together what a place is actually like. Star ratings miss nuance. Review apps are cluttered.
 
-I wanted to build a system that could take that unstructured, messy data and turn it into something actionable. Instead of reading hundreds of reviews, users can quickly understand the overall sentiment, vibe, and key insights in seconds. The goal was to reduce decision fatigue and make the process more intuitive and reliable.
+This project was built to solve that — take unstructured, noisy review data and turn it into something you can act on in under 2 minutes.
 
 ---
 
-## Why "Know Before You Go"?
+## What It Does
 
-This project was originally called *VibeFinder*, but the name evolved to better reflect the core goal of the system. The focus is not just on identifying a restaurant’s vibe, but on helping users make confident, informed decisions ahead of time.  
+For every restaurant, the app surfaces:
 
-“Know Before You Go” captures that intent more clearly — turning raw, messy data into actionable insights that reduce uncertainty and decision fatigue.
+- **Vibe** — what it actually feels like inside: noise level, lighting, crowd energy
+- **True Sentiment** — a percentage calculated from review language, not star averages
+- **Best For / Skip If** — whether it fits your night (date night, groups, quick bite, etc.)
+- **Must-Try Dishes** — real food items reviewers mentioned by name
+- **Honest Warnings** — the most common complaints before you book
+- **Neighborhood Note** — whether the area is safe to walk at night and what is nearby
 
 ---
 
 ## Architecture
 
-This project follows a scalable **3-Tier Architecture**:
-
-### Front-End (React + Vite + Tailwind CSS)
-- Responsive, modern UI with clean design
-- Real-time search with loading states
-- Interactive restaurant cards with AI-powered insights
-- Focus on usability and fast decision-making
-
-### Back-End (Python FastAPI)
-- High-performance REST API
-- Orchestrates data collection and ML pipelines
-- Integrates with external APIs (e.g., Google Places)
-- Automatically generated API documentation
-
-### Data Layer (PostgreSQL + ML Pipeline)
-- Stores restaurant data and processed reviews
-- Handles large-scale unstructured text processing
-- Supports efficient querying and recommendation generation
-
----
-
-## Core Features
-
-- **Sentiment Analysis**  
-  Goes beyond star ratings by analyzing real customer sentiment using VADER.
-
-- **Vibe Detection**  
-  Uses topic modeling (LDA) to identify patterns like  
-  `#Romantic`, `#FamilyFriendly`, `#Loud`, `#Casual`.
-
-- **Must-Try Dishes**  
-  Extracted using TF-IDF and keyword analysis from thousands of reviews.
-
-- **Common Complaints**  
-  Highlights recurring issues to give users a balanced perspective.
-
-- **Location-Aware Recommendations**  
-  Combines sentiment + proximity to surface locally relevant results.
-
----
-
-## Engineering Focus
-
-A key challenge in this project is working with **highly unstructured and noisy data**. Reviews vary widely in quality, tone, and relevance, so the system is designed to:
-
-- Clean and normalize raw text data  
-- Aggregate sentiment across multiple sources  
-- Weight insights based on consistency rather than outliers  
-- Filter results based on geolocation and user context  
-- Balance signal vs noise to deliver reliable outputs  
-
-This required building a pipeline that transforms raw reviews into structured, confidence-driven insights that users can trust.
+```
+Frontend (React + Vite + Tailwind)
+        ↓  HTTP GET request
+Backend (FastAPI + Python)
+        ↓                    ↓
+Google Places API       OpenAI gpt-4o-mini
+(restaurants + reviews) (AI analysis of reviews)
+        ↓
+JSON response → React renders restaurant cards
+```
 
 ---
 
 ## Tech Stack
 
-### Front-End
-- React 18  
-- Vite  
-- Tailwind CSS  
-- Fetch API  
+### Frontend
+| Tool | Purpose |
+|---|---|
+| React 19 | UI framework — component-based, state-driven |
+| Vite | Build tool and dev server |
+| Tailwind CSS | Utility-first styling |
+| Fetch API | HTTP requests to the backend |
+| Browser Geolocation API | Near Me feature — GPS coordinates |
 
-### Back-End
-- Python 3.9+  
-- FastAPI  
-- PostgreSQL  
-- SQLAlchemy  
+### Backend
+| Tool | Purpose |
+|---|---|
+| Python 3.12 | Language |
+| FastAPI | REST API framework with auto-generated docs |
+| Uvicorn | ASGI web server |
+| Pydantic | Data validation and settings management |
+| `googlemaps` | Google Places API — find restaurants and fetch reviews |
+| `openai` | OpenAI API client — `gpt-4o-mini` for review analysis |
+| `python-dotenv` | Loads API keys from `.env` file |
 
-### ML / NLP
-- VADER (Sentiment Analysis)  
-- scikit-learn (LDA, TF-IDF)  
-- spaCy (NER + text processing)  
-- BeautifulSoup / Selenium (Data collection)  
-
-### Infrastructure
-- Docker (Containerization)  
-- Redis + Celery (Async processing)  
-- Railway (Backend + DB hosting)  
-- Vercel (Frontend deployment)  
-- Upstash (Serverless Redis)  
+### Deployment
+| Service | Purpose |
+|---|---|
+| Vercel | Frontend hosting |
+| Railway | Backend hosting |
 
 ---
 
-## API Endpoint Example
+## How to Run Locally
+
+### Prerequisites
+- Node.js 18+
+- Python 3.12+
+- A Google Places API key
+- An OpenAI API key
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Runs at `http://localhost:5173`
+
+### Backend
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create `backend/.env`:
+```
+GOOGLE_PLACES_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
+```
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Runs at `http://localhost:8000`
+Interactive API docs at `http://localhost:8000/docs`
+
+---
+
+## API
 
 ### `GET /api/v1/search`
 
-Search for restaurants by location.
+| Parameter | Required | Description |
+|---|---|---|
+| `location` | Yes | City, neighborhood, or restaurant name |
+| `max_results` | No | Max results to return (default 10) |
+| `user_lat` | No | GPS latitude (for Near Me distance calculation) |
+| `user_lng` | No | GPS longitude (for Near Me distance calculation) |
 
-**Parameters:**
-- `location` (string): e.g. `"Lewiston, Maine"`
+**Example:**
+```
+GET /api/v1/search?location=Sushi+downtown+Boston&max_results=10
+```
 
-**Response:**
-```json
-[
-  {
-    "name": "Joe's Pizza",
-    "rating": 4.5,
-    "trueSentiment": "82% Positive",
-    "vibeCheck": ["#Loud", "#GoodForGroups"],
-    "mustTryDishes": ["Spicy Rigatoni", "Garlic Knots"],
-    "commonComplaints": ["Slow service on weekends"]
-  }
-]
+---
+
+## Project Structure
+
+```
+Know-Before-You-Go/
+├── frontend/
+│   ├── src/
+│   │   ├── main.jsx              # Entry point
+│   │   ├── App.jsx               # Root component, state, API call
+│   │   └── components/
+│   │       ├── SearchBar.jsx     # Search input + Near Me button
+│   │       ├── ResultsContainer.jsx  # Results grid
+│   │       ├── RestaurantCard.jsx    # Individual restaurant card
+│   │       ├── PhotoGalleryModal.jsx # Photo overlay
+│   │       └── Logo.jsx
+│   ├── package.json
+│   └── vite.config.js
+│
+└── backend/
+    ├── app/
+    │   ├── main.py               # FastAPI app, CORS, router setup
+    │   ├── api/search.py         # Search endpoint + pipeline orchestration
+    │   ├── core/config.py        # Settings via Pydantic BaseSettings
+    │   ├── models/restaurant.py  # Pydantic response model
+    │   └── services/
+    │       ├── google_places.py  # Google Places API integration
+    │       ├── review_scraper.py # Fetches reviews per restaurant
+    │       └── claude_analyzer.py# OpenAI review analysis
+    └── requirements.txt
+```
+
+---
+
+## License
+
+MIT
