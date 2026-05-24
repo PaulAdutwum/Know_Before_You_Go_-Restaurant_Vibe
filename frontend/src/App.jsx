@@ -7,7 +7,7 @@ const DISCOVER_CARDS = [
   {
     icon: '◎',
     title: 'Atmosphere & Vibe',
-    desc: 'A sentence describing what it feels like inside — noise level, lighting, crowd energy. Not a generic tag.',
+    desc: 'A real sentence describing what it feels like inside — noise level, lighting, crowd energy. Not a generic tag.',
     delay: 0,
   },
   {
