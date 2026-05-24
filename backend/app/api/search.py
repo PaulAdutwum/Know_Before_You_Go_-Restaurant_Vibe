@@ -88,7 +88,7 @@ def detect_restaurant_name_query(query: str) -> bool:
         return True
     if location_score > restaurant_score:
         return False
-    return query.istitle() and len(query_words) <= 5
+    return len(query_words) <= 4
 
 
 async def enrich_restaurant(resto: dict, user_lat: float, user_lng: float) -> RestaurantResponse:
